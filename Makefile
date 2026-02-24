@@ -2,7 +2,7 @@ lexer:
 	@echo "Building lexer...\n"
 
 	mkdir -p bin
-	cd bin && flex ../src/gocompiler.l && $(CC) lex.yy.c -o lexer
+	cd bin && flex ../src/java_compiler.l && $(CC) lex.yy.c -o lexer
 
 	@echo "\nLexer built successfully."
 
