@@ -6,19 +6,6 @@
 %}
 digit   [0-9]
 character    [a-zA-Z]
-if      "if"
-then    "then"
-else    "else"
-integer "integer"
-double  "double"
-o_parenthesis   "("
-c_parenthesis   ")"
-equal           "="
-comma           ","
-star            "*"
-f_slash          "/"
-adition          "+"
-subtraction      "-"
 open_comment   "/*"
 close_comment  "*/"
 
@@ -27,14 +14,52 @@ close_comment  "*/"
 %%
 {digit}+                { printf("NATURAL(%s)\n", yytext); }
 {digit}*"."{digit}+     { printf("DECIMAL(%s)\n", yytext); }
-{o_parenthesis}|{c_parenthesis} { printf("%s\n", yytext); }
-{equal}|{comma}|{star}|{f_slash}|{adition}|{subtraction} { printf("%s\n", yytext); }
-if                      { printf("IF\n"); }
-else                    { printf("ELSE\n"); }
-then                    { printf("THEN\n"); }
-double                  { printf("DOUBLE\n"); }
-integer                 { printf("INTEGER\n"); }
 {character}({character}|{digit})*   { printf("IDENTIFIER(%s)\n", yytext); }
+
+"true"|"false"              { printf("BOOLLIT(%s)\n", yytext); }
+"&&"                     { printf("AND\n"); }
+"="                     { printf("ASSIGN\n"); }
+"*"                     { printf("STAR\n"); }
+","                     { printf("COMMA\n"); }
+"/"                     { printf("DIV\n"); }
+"=="                    { printf("EQ\n"); }
+">="                    { printf("GE\n"); }
+">"                     { printf("GT\n"); }
+"{"                     { printf("LBRACE\n"); }
+"<="                    { printf("LE\n"); }
+"("                     { printf("LPAR\n"); }
+"["                     { printf("LSQ\n"); }
+"<"                     { printf("LT\n"); }
+"-"                     { printf("MINUS\n"); }
+"%"                     { printf("MOD\n"); }
+"!="                    { printf("NE\n"); }
+"!"                     { printf("NOT\n"); }
+"||"                     { printf("OR\n"); }
+"+"                     { printf("PLUS\n"); }
+"}"                     { printf("RBRACE\n"); }
+")"                     { printf("RPAR\n"); }
+"]"                     { printf("RSQ\n"); }
+";"                     { printf("SEMICOLON\n"); }
+"->"                    { printf("ARROW\n"); }
+"<<"                    { printf("LSHIFT\n"); }
+">>"                    { printf("RSHIFT\n"); }
+"^"                     { printf("XOR\n"); }
+"boolean"                 { printf("BOOL\n"); }
+"class"                   { printf("CLASS\n"); }
+".length"                { printf("DOTLENGTH\n"); }
+"double"                  { printf("DOUBLE\n"); }
+"else"                    { printf("ELSE\n"); }
+"if"                      { printf("IF\n"); }
+"int"                     { printf("INT\n"); }
+"System.out.println"     { printf("PRINT\n"); }
+"Integer.parseInt"         { printf("PARSEINT\n"); }
+"public"                  { printf("PUBLIC\n"); }
+"return"                  { printf("RETURN\n"); }
+"static"                  { printf("STATIC\n"); }
+"string"                  { printf("STRING\n"); }
+"void"                    { printf("VOID\n"); }
+"while"                   { printf("WHILE\n"); }
+"++"|"--"|"null"|"this"|"new" { printf("RESERVED(%s)\n", yytext); }
 
 {open_comment}         { BEGIN(COMMENT); }
 <COMMENT>\n            { line_number++; column_number = 1; }
