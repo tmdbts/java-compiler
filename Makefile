@@ -11,5 +11,12 @@ test: lexer
 
 	sh tests/test.sh -b bin/lexer -m 1 -l
 
+zip:
+	@echo "Creating zip archive...\n"
+
+	zip -r bin/java_compiler.zip src/java_compiler.l
+
+	@echo "Zip archive created successfully."
+
 clean:
 	rm -rf bin
