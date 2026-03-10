@@ -5,14 +5,11 @@
     char string_buffer[1024] = "\0";
 %}
 
-digit               [0-9]
-binary_digit        [01]
-octal_digit         [0-7]
-hex_digit           [0-9a-fA-F]
-sign                [+-]
-exponent            [eE]{sign}?{digit}+
-int_literal         (0_?{octal_digit}+_{octal_digit}+)+|(0{octal_digit}+)|(0[xX]_?{hex_digit}+_{hex_digit}+)+|(0[xX]{hex_digit}+)|([1-9]({digit}+_{digit}+)*|[1-9]{digit}*)|"0"
-float_literal       ({digit}+\.{digit}*{exponent}?)|({digit}+"."{digit}*)|(\.{digit}+{exponent}?)|({digit}+{exponent})
+digit           [0-9]
+dec_part        {digit}([0-9_]*{digit})?
+exponent        [eE][+-]?{dec_part}
+int_literal     0|[1-9]([0-9_]*[0-9])?
+float_literal   ({dec_part}"."({dec_part})?({exponent})?)|("."{dec_part}({exponent})?)|({dec_part}{exponent})
 character    [a-zA-Z]
 open_block_comment   "/*"
 close_block_comment  "*/"
@@ -21,8 +18,8 @@ reserved_keywords "++"|"--"|"null"|"this"|"new"|"abstract"|"assert"|"break"|"byt
 %X BLOCK_COMMENT STRLIT
 
 %%
-[\r\n]+                { line_number++; column_number = 1; }
-[ \t\f]+                 { column_number += yyleng; }
+[\r\n]+                	{ line_number++; column_number = 1; }
+[ \t\f]+                { column_number += yyleng; }
 
 "//"([^\n\r]|.)*                   { line_number++; column_number = 1; }
 
@@ -41,11 +38,11 @@ reserved_keywords "++"|"--"|"null"|"this"|"new"|"abstract"|"assert"|"break"|"byt
 <STRLIT>\n              { printf("Line %d, column %d: unterminated string literal\n", line_number, column_number); string_buffer[0] = '\0'; line_number++; column_number=1; BEGIN(INITIAL); }
 <STRLIT>.               { strncat(string_buffer, yytext, 1); }
 
-{int_literal}                { printf("NATURAL(%s)\n", yytext); }
-{float_literal}     { printf("DECIMAL(%s)\n", yytext); }
+{int_literal}           { printf("NATURAL(%s)\n", yytext); }
+{float_literal}     	{ printf("DECIMAL(%s)\n", yytext); }
 
-"true"|"false"              { printf("BOOLLIT(%s)\n", yytext); }
-"&&"                     { printf("AND\n"); }
+"true"|"false"          { printf("BOOLLIT(%s)\n", yytext); }
+"&&"                   	{ printf("AND\n"); }
 "="                     { printf("ASSIGN\n"); }
 "*"                     { printf("STAR\n"); }
 ","                     { printf("COMMA\n"); }
@@ -62,7 +59,7 @@ reserved_keywords "++"|"--"|"null"|"this"|"new"|"abstract"|"assert"|"break"|"byt
 "%"                     { printf("MOD\n"); }
 "!="                    { printf("NE\n"); }
 "!"                     { printf("NOT\n"); }
-"||"                     { printf("OR\n"); }
+"||"                    { printf("OR\n"); }
 "+"                     { printf("PLUS\n"); }
 "}"                     { printf("RBRACE\n"); }
 ")"                     { printf("RPAR\n"); }
@@ -72,27 +69,27 @@ reserved_keywords "++"|"--"|"null"|"this"|"new"|"abstract"|"assert"|"break"|"byt
 "<<"                    { printf("LSHIFT\n"); }
 ">>"                    { printf("RSHIFT\n"); }
 "^"                     { printf("XOR\n"); }
-"boolean"                 { printf("BOOL\n"); }
-"class"                   { printf("CLASS\n"); }
-".length"                { printf("DOTLENGTH\n"); }
-"double"                  { printf("DOUBLE\n"); }
-"else"                    { printf("ELSE\n"); }
-"if"                      { printf("IF\n"); }
-"int"                     { printf("INT\n"); }
-"System.out.print"     { printf("PRINT\n"); }
-"Integer.parseInt"         { printf("PARSEINT\n"); }
-"String"                    { printf("STRING\n"); }
-"public"                  { printf("PUBLIC\n"); }
-"return"                  { printf("RETURN\n"); }
-"static"                  { printf("STATIC\n"); }
-"void"                    { printf("VOID\n"); }
-"while"                   { printf("WHILE\n"); }
+"boolean"               { printf("BOOL\n"); }
+"class"                 { printf("CLASS\n"); }
+".length"               { printf("DOTLENGTH\n"); }
+"double"                { printf("DOUBLE\n"); }
+"else"                  { printf("ELSE\n"); }
+"if"                    { printf("IF\n"); }
+"int"                   { printf("INT\n"); }
+"System.out.print"     	{ printf("PRINT\n"); }
+"Integer.parseInt"      { printf("PARSEINT\n"); }
+"String"                { printf("STRING\n"); }
+"public"                { printf("PUBLIC\n"); }
+"return"                { printf("RETURN\n"); }
+"static"                { printf("STATIC\n"); }
+"void"                  { printf("VOID\n"); }
+"while"                 { printf("WHILE\n"); }
 
-{reserved_keywords}      { printf("RESERVED(%s)\n", yytext); }
+{reserved_keywords}     { printf("RESERVED(%s)\n", yytext); }
 
 ({character}|_|\$)({character}|_|\$|{digit})*   { printf("IDENTIFIER(%s)\n", yytext); }
 
-.                      { printf("Line %d, column %d: unrecognized character (%s)\n", line_number, column_number, yytext); }
+.                      	{ printf("Line %d, column %d: unrecognized character (%s)\n", line_number, column_number, yytext); }
 %%
 extern int yylex();
 int main() {
