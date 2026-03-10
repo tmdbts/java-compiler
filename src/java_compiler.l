@@ -21,8 +21,11 @@ reserved_keywords "++"|"--"|"null"|"this"|"new"|"abstract"|"assert"|"break"|"byt
 [\r\n]+                	{ line_number++; column_number = 1; }
 [ \t\f]+                { column_number += yyleng; }
 
-{open_block_comment}    { BEGIN(BLOCK_COMMENT); }
-<BLOCK_COMMENT>\n       { line_number++; column_number = 1; }
+"//"([^\n\r]|.)*                   { line_number++; column_number = 1; }
+
+{open_block_comment}           { BEGIN(BLOCK_COMMENT); }
+<BLOCK_COMMENT>\n                    { line_number++; column_number = 1; }
+<BLOCK_COMMENT><<EOF>>            { printf("Line %d, column %d: unterminated block comment\n", line_number, column_number); BEGIN(INITIAL); }
 <BLOCK_COMMENT>{close_block_comment} { BEGIN(INITIAL); }
 <BLOCK_COMMENT>.             { /* ignore */ }
 
@@ -31,6 +34,8 @@ reserved_keywords "++"|"--"|"null"|"this"|"new"|"abstract"|"assert"|"break"|"byt
 <STRLIT>\\              { printf("Line %d, column %d: invalid escape sequence (%s)\n", line_number, column_number, yytext); }
 <STRLIT>\\.             { printf("Line %d, column %d: invalid escape sequence (%s)\n", line_number, column_number, yytext); }
 <STRLIT>\"              { printf("STRLIT(\"%s\")\n", string_buffer); string_buffer[0] = '\0'; BEGIN(INITIAL); }
+<STRLIT><<EOF>>            { printf("Line %d, column %d: unterminated string literal\n", line_number, column_number); string_buffer[0] = '\0'; BEGIN(INITIAL); }
+<STRLIT>\n              { printf("Line %d, column %d: unterminated string literal\n", line_number, column_number); string_buffer[0] = '\0'; line_number++; column_number=1; BEGIN(INITIAL); }
 <STRLIT>.               { strncat(string_buffer, yytext, 1); }
 
 {int_literal}           { printf("NATURAL(%s)\n", yytext); }
