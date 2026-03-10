@@ -16,13 +16,13 @@ float_literal       ({digit}+\.{digit}*{exponent}?)|({digit}+"."{digit}*)|(\.{di
 character    [a-zA-Z]
 open_block_comment   "/*"
 close_block_comment  "*/"
-reserved_keywords "++"|"--"|"null"|"this"|"new"|"abstract"|"assert"|"break"|"byte"|"case"|"char"|"catch"|"const"|"continue"|"default"|"do"|"enum"|"extends"|"final"|"finally"|"float"|"for"|"goto"|"implements"|"import"|"Integer"|"instanceof"|"interface"|"long"|"native"|"package"|"private"|"protected"|"short"|"static"|"strict"|"strictfp"|"super"|"switch"|"System"|"synchronized"|"throw"|"throws"|"transient"|"try"|"volatile"|"while"|"open"|"module"|"requires"|"transitive"|"exports"|"opens"|"to"|"uses"|"provides"|"with"|"_"
+reserved_keywords "++"|"--"|"null"|"this"|"new"|"abstract"|"assert"|"break"|"byte"|"case"|"char"|"catch"|"const"|"continue"|"default"|"do"|"enum"|"extends"|"final"|"finally"|"float"|"for"|"goto"|"implements"|"import"|"Integer"|"instanceof"|"interface"|"long"|"native"|"package"|"private"|"protected"|"short"|"static"|"strict"|"strictfp"|"super"|"switch"|"System"|"synchronized"|"throw"|"throws"|"transient"|"try"|"volatile"|"while"|"open"|"module"|"requires"|"transitive"|"exports"|"opens"|"uses"|"provides"|"_"
 
 %X BLOCK_COMMENT STRLIT
 
 %%
 [\r\n]+                { line_number++; column_number = 1; }
-[ \t]+                 { column_number += yyleng; }
+[ \t\f]+                 { column_number += yyleng; }
 
 {open_block_comment}           { BEGIN(BLOCK_COMMENT); }
 <BLOCK_COMMENT>\n                    { line_number++; column_number = 1; }
@@ -76,16 +76,16 @@ reserved_keywords "++"|"--"|"null"|"this"|"new"|"abstract"|"assert"|"break"|"byt
 "int"                     { printf("INT\n"); }
 "System.out.print"     { printf("PRINT\n"); }
 "Integer.parseInt"         { printf("PARSEINT\n"); }
+"String"                    { printf("STRING\n"); }
 "public"                  { printf("PUBLIC\n"); }
 "return"                  { printf("RETURN\n"); }
 "static"                  { printf("STATIC\n"); }
-"string"                  { printf("STRING\n"); }
 "void"                    { printf("VOID\n"); }
 "while"                   { printf("WHILE\n"); }
 
 {reserved_keywords}      { printf("RESERVED(%s)\n", yytext); }
 
-[{character}_$]([{character}_$]|{digit})*   { printf("IDENTIFIER(%s)\n", yytext); }
+({character}|_|\$)({character}|_|\$|{digit})*   { printf("IDENTIFIER(%s)\n", yytext); }
 
 .                      { printf("Line %d, column %d: unrecognized character (%s)\n", line_number, column_number, yytext); }
 %%
