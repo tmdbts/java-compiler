@@ -16,7 +16,7 @@ float_literal       ({digit}+\.{digit}*{exponent}?)|({digit}+"."{digit}*)|(\.{di
 character    [a-zA-Z]
 open_block_comment   "/*"
 close_block_comment  "*/"
-reserved_keywords "++"|"--"|"null"|"this"|"new"|"absctract"|"assert"|"break"|"byte"|"case"|"catch"|"const"|"continue"|"default"|"do"|"enum"|"extends"|"final"|"finally"|"for"|"goto"|"implements"|"import"|"instanceof"|"interface"|"long"|"native"|"package"|"private"|"protected"|"short"|"static"|"strict"|"super"|"switch"|"synchronized"|"throw"|"throws"|"transient"|"try"|"volatile"|"while"|"open"|"module"|"requires"|"transitive"|"exports"|"opens"|"to"|"uses"|"provides"|"with"|"_"
+reserved_keywords "++"|"--"|"null"|"this"|"new"|"abstract"|"assert"|"break"|"byte"|"case"|"char"|"catch"|"const"|"continue"|"default"|"do"|"enum"|"extends"|"final"|"finally"|"float"|"for"|"goto"|"implements"|"import"|"Integer"|"instanceof"|"interface"|"long"|"native"|"package"|"private"|"protected"|"short"|"static"|"strict"|"strictfp"|"super"|"switch"|"System"|"synchronized"|"throw"|"throws"|"transient"|"try"|"volatile"|"while"|"open"|"module"|"requires"|"transitive"|"exports"|"opens"|"to"|"uses"|"provides"|"with"|"_"
 
 %X BLOCK_COMMENT STRLIT
 
@@ -74,7 +74,7 @@ reserved_keywords "++"|"--"|"null"|"this"|"new"|"absctract"|"assert"|"break"|"by
 "else"                    { printf("ELSE\n"); }
 "if"                      { printf("IF\n"); }
 "int"                     { printf("INT\n"); }
-"System.out.println"     { printf("PRINT\n"); }
+"System.out.print"     { printf("PRINT\n"); }
 "Integer.parseInt"         { printf("PARSEINT\n"); }
 "public"                  { printf("PUBLIC\n"); }
 "return"                  { printf("RETURN\n"); }
@@ -85,7 +85,7 @@ reserved_keywords "++"|"--"|"null"|"this"|"new"|"absctract"|"assert"|"break"|"by
 
 {reserved_keywords}      { printf("RESERVED(%s)\n", yytext); }
 
-{character}({character}|{digit})*   { printf("IDENTIFIER(%s)\n", yytext); }
+[{character}_$]([{character}_$]|{digit})*   { printf("IDENTIFIER(%s)\n", yytext); }
 
 .                      { printf("Line %d, column %d: unrecognized character (%s)\n", line_number, column_number, yytext); }
 %%
