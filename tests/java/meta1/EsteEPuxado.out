@@ -1,0 +1,46 @@
+STRLIT("")
+STRLIT("\\")
+STRLIT("\"")
+STRLIT("This is a string")
+STRLIT("This is a ")
+PLUS
+Line 8, col 20: invalid escape sequence (\g)
+CLASS
+IDENTIFIER(Small)
+Line 9, col 13: illegal character (#)
+PUBLIC
+STATIC
+VOID
+IDENTIFIER(main)
+LPAR
+STRING
+LSQ
+RSQ
+IDENTIFIER(args)
+RPAR
+LBRACE
+RBRACE
+Line 12, col 1: illegal character (#)
+STRLIT("Hello /\\\\**/ boyyyy")
+IDENTIFIER(vari)
+Line 16, col 5: illegal character (.)
+IDENTIFIER(able)
+NATURAL(0)
+NATURAL(2)
+DECIMAL(1.e0_0)
+Line 19, col 2: invalid escape sequence (\)
+Line 19, col 1: unterminated string literal
+STRLIT("\\")
+Line 21, col 5: invalid escape sequence (\)
+Line 21, col 1: unterminated string literal
+STRLIT("\\")
+IDENTIFIER(asd3)
+DECIMAL(.3)
+IDENTIFIER(a)
+MINUS
+DECIMAL(1.0)
+IDENTIFIER(e)
+MINUS
+NATURAL(1)
+DECIMAL(1.E+09)
+Line 30, col 1: unterminated comment
