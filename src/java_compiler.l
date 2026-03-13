@@ -5,6 +5,11 @@
 	int block_comment_line = 1;
 	int block_comment_column = 1;
 
+	int string_start_line = 1;
+	int string_start_column = 1;
+
+	int string_has_error = 0;
+
     char string_buffer[1024] = "\0";
 %}
 
@@ -48,24 +53,41 @@ BEGIN(INITIAL);
 
 \" {
 string_buffer[0] = '\0';
+string_start_line = line_number;
+string_start_column = column_number;
+string_has_error = 0;
 column_number += yyleng;
 BEGIN(STRLIT);
 }
 <STRLIT>\\[\"nrtf\\]    { strcat(string_buffer, yytext); column_number += yyleng; }
 <STRLIT>\\ {
-printf("Line %d, column %d: invalid escape sequence (%s)\n", line_number, column_number, yytext);
+printf("Line %d, col %d: invalid escape sequence (%s)\n", line_number, column_number, yytext);
+string_has_error = 1;
 column_number += yyleng;
 }
-<STRLIT>\\.             { printf("Line %d, column %d: invalid escape sequence (%s)\n", line_number, column_number, yytext); column_number += yyleng; }
+
+<STRLIT>\\. {
+printf("Line %d, col %d: invalid escape sequence (%s)\n", line_number, column_number, yytext);
+string_has_error = 1;
+column_number += yyleng;
+}
 <STRLIT>\" {
+if (!string_has_error) {
 printf("STRLIT(\"%s\")\n", string_buffer);
+}
 string_buffer[0] = '\0';
 column_number += yyleng;
 BEGIN(INITIAL);
 }
-<STRLIT><<EOF>>            { printf("Line %d, column %d: unterminated string literal\n", line_number, column_number); string_buffer[0] = '\0'; BEGIN(INITIAL); }
+<STRLIT><<EOF>> {
+printf("Line %d, col %d: unterminated string literal\n",
+string_start_line, string_start_column);
+string_buffer[0] = '\0';
+BEGIN(INITIAL);
+}
 <STRLIT>\r\n {
-printf("Line %d, column %d: unterminated string literal\n", line_number, column_number);
+printf("Line %d, col %d: unterminated string literal\n",
+string_start_line, string_start_column);
 string_buffer[0] = '\0';
 line_number++;
 column_number = 1;
@@ -73,12 +95,14 @@ BEGIN(INITIAL);
 }
 
 <STRLIT>\r|\n {
-printf("Line %d, column %d: unterminated string literal\n", line_number, column_number);
+printf("Line %d, col %d: unterminated string literal\n",
+string_start_line, string_start_column);
 string_buffer[0] = '\0';
 line_number++;
 column_number = 1;
 BEGIN(INITIAL);
 }
+
 <STRLIT>.               { strncat(string_buffer, yytext, 1); column_number += yyleng; }
 
 {float_literal} { printf("DECIMAL(%s)\n", yytext); column_number += yyleng; }
@@ -136,7 +160,7 @@ column_number += yyleng;
 }
 
 . {
-printf("Line %d, column %d: unrecognized character (%s)\n", line_number, column_number, yytext);
+printf("Line %d, col %d: illegal character (%s)\n", line_number, column_number, yytext);
 column_number += yyleng;
 }
 %%
