@@ -21,7 +21,7 @@ float_literal   ({dec_part}"."({dec_part})?({exponent})?)|("."{dec_part}({expone
 character    [a-zA-Z]
 open_block_comment   "/*"
 close_block_comment  "*/"
-reserved_keywords "++"|"--"|"null"|"this"|"new"|"abstract"|"assert"|"break"|"byte"|"case"|"char"|"catch"|"const"|"continue"|"default"|"do"|"enum"|"extends"|"final"|"finally"|"float"|"for"|"goto"|"implements"|"import"|"Integer"|"instanceof"|"interface"|"long"|"native"|"package"|"private"|"protected"|"short"|"static"|"strict"|"strictfp"|"super"|"switch"|"System"|"synchronized"|"throw"|"throws"|"transient"|"try"|"volatile"|"while"|"open"|"module"|"requires"|"transitive"|"exports"|"opens"|"uses"|"provides"|"_"
+reserved_keywords "++"|"--"|"null"|"this"|"new"|"abstract"|"assert"|"break"|"byte"|"case"|"char"|"catch"|"const"|"continue"|"default"|"do"|"enum"|"extends"|"final"|"finally"|"float"|"for"|"goto"|"implements"|"import"|"Integer"|"instanceof"|"interface"|"long"|"native"|"package"|"private"|"protected"|"short"|"static"|"strict"|"strictfp"|"super"|"switch"|"System"|"synchronized"|"throw"|"throws"|"transient"|"try"|"volatile"|"while"|"open"|"module"|"requires"|"transitive"|"exports"|"opens"|"uses"|"provides"
 
 %X BLOCK_COMMENT STRLIT
 
@@ -60,6 +60,40 @@ column_number += yyleng;
 BEGIN(STRLIT);
 }
 <STRLIT>\\[\"nrtf\\]    { strcat(string_buffer, yytext); column_number += yyleng; }
+
+<STRLIT>\\\r\n {
+printf("Line %d, col %d: invalid escape sequence (\\)\n", line_number, column_number);
+string_has_error = 1;
+printf("Line %d, col %d: unterminated string literal\n",
+string_start_line, string_start_column);
+string_buffer[0] = '\0';
+line_number++;
+column_number = 1;
+BEGIN(INITIAL);
+}
+
+<STRLIT>\\\r {
+printf("Line %d, col %d: invalid escape sequence (\\)\n", line_number, column_number);
+string_has_error = 1;
+printf("Line %d, col %d: unterminated string literal\n",
+string_start_line, string_start_column);
+string_buffer[0] = '\0';
+line_number++;
+column_number = 1;
+BEGIN(INITIAL);
+}
+
+<STRLIT>\\\n {
+printf("Line %d, col %d: invalid escape sequence (\\)\n", line_number, column_number);
+string_has_error = 1;
+printf("Line %d, col %d: unterminated string literal\n",
+string_start_line, string_start_column);
+string_buffer[0] = '\0';
+line_number++;
+column_number = 1;
+BEGIN(INITIAL);
+}
+
 <STRLIT>\\ {
 printf("Line %d, col %d: invalid escape sequence (%s)\n", line_number, column_number, yytext);
 string_has_error = 1;
