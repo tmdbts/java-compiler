@@ -26,8 +26,7 @@ reserved_keywords "++"|"--"|"null"|"this"|"new"|"abstract"|"assert"|"break"|"byt
 %X BLOCK_COMMENT STRLIT
 
 %%
-\r\n        { line_number++; column_number = 1; }
-\r|\n       { line_number++; column_number = 1; }
+\r\n|\r|\n       { line_number++; column_number = 1; }
 [ \t\f]+                { column_number += yyleng; }
 
 "//"[^\r\n]* { column_number += yyleng; }
@@ -38,8 +37,7 @@ block_comment_column = column_number;
 column_number += yyleng;
 BEGIN(BLOCK_COMMENT);
 }
-<BLOCK_COMMENT>\r\n        { line_number++; column_number = 1; }
-<BLOCK_COMMENT>\r|\n       { line_number++; column_number = 1; }
+<BLOCK_COMMENT>\r\n|\r|\n       { line_number++; column_number = 1; }
 <BLOCK_COMMENT><<EOF>> {
 printf("Line %d, col %d: unterminated comment\n",
 block_comment_line, block_comment_column);
@@ -59,9 +57,10 @@ string_has_error = 0;
 column_number += yyleng;
 BEGIN(STRLIT);
 }
+
 <STRLIT>\\[\"nrtf\\]    { strcat(string_buffer, yytext); column_number += yyleng; }
 
-<STRLIT>\\\r\n {
+<STRLIT>\\\r\n|\\\r|\\\n {
 printf("Line %d, col %d: invalid escape sequence (\\)\n", line_number, column_number);
 string_has_error = 1;
 printf("Line %d, col %d: unterminated string literal\n",
@@ -71,35 +70,11 @@ line_number++;
 column_number = 1;
 BEGIN(INITIAL);
 }
-
-<STRLIT>\\\r {
-printf("Line %d, col %d: invalid escape sequence (\\)\n", line_number, column_number);
-string_has_error = 1;
-printf("Line %d, col %d: unterminated string literal\n",
-string_start_line, string_start_column);
-string_buffer[0] = '\0';
-line_number++;
-column_number = 1;
-BEGIN(INITIAL);
-}
-
-<STRLIT>\\\n {
-printf("Line %d, col %d: invalid escape sequence (\\)\n", line_number, column_number);
-string_has_error = 1;
-printf("Line %d, col %d: unterminated string literal\n",
-string_start_line, string_start_column);
-string_buffer[0] = '\0';
-line_number++;
-column_number = 1;
-BEGIN(INITIAL);
-}
-
 <STRLIT>\\ {
 printf("Line %d, col %d: invalid escape sequence (%s)\n", line_number, column_number, yytext);
 string_has_error = 1;
 column_number += yyleng;
 }
-
 <STRLIT>\\. {
 printf("Line %d, col %d: invalid escape sequence (%s)\n", line_number, column_number, yytext);
 string_has_error = 1;
@@ -119,16 +94,7 @@ string_start_line, string_start_column);
 string_buffer[0] = '\0';
 BEGIN(INITIAL);
 }
-<STRLIT>\r\n {
-printf("Line %d, col %d: unterminated string literal\n",
-string_start_line, string_start_column);
-string_buffer[0] = '\0';
-line_number++;
-column_number = 1;
-BEGIN(INITIAL);
-}
-
-<STRLIT>\r|\n {
+<STRLIT>\r\n|\r|\n {
 printf("Line %d, col %d: unterminated string literal\n",
 string_start_line, string_start_column);
 string_buffer[0] = '\0';
