@@ -1,4 +1,15 @@
 %{
+    #include "y.tab.h"
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <string.h>
+
+    int yyparse(void);
+
+	#define PASS_TOKEN() yylval.value = strdup(yytext);
+    #define PASS_TOKEN_NATURAL() yylval.natural = atoi(yytext);
+	#define PASS_TOKEN_STRLIT() yylval.value = strdup(string_buffer);
+
     int line_number = 1;
     int column_number = 1;
 
@@ -41,7 +52,7 @@ BEGIN(BLOCK_COMMENT);
 }
 <BLOCK_COMMENT>\r\n|\r|\n       { line_number++; column_number = 1; }
 <BLOCK_COMMENT><<EOF>> {
-printf("Line %d, col %d: unterminated comment\n",
+printf("Line %d, column %d: unterminated comment\n",
 block_comment_line, block_comment_column);
 BEGIN(INITIAL);
 }
@@ -63,9 +74,9 @@ BEGIN(STRLIT);
 <STRLIT>\\[\"nrtf\\]    { strcat(string_buffer, yytext); column_number += yyleng; }
 
 <STRLIT>\\\r\n|\\\r|\\\n {
-printf("Line %d, col %d: invalid escape sequence (\\)\n", line_number, column_number);
+printf("Line %d, column %d: invalid escape sequence (\\)\n", line_number, column_number);
 string_has_error = 1;
-printf("Line %d, col %d: unterminated string literal\n",
+printf("Line %d, column %d: unterminated string literal\n",
 string_start_line, string_start_column);
 string_buffer[0] = '\0';
 line_number++;
@@ -73,29 +84,31 @@ column_number = 1;
 BEGIN(INITIAL);
 }
 <STRLIT>\\ {
-printf("Line %d, col %d: invalid escape sequence (%s)\n", line_number, column_number, yytext);
+printf("Line %d, column %d: invalid escape sequence (%s)\n", line_number, column_number, yytext);
 string_has_error = 1;
 column_number += yyleng;
 }
 <STRLIT>\\. {
-printf("Line %d, col %d: invalid escape sequence (%s)\n", line_number, column_number, yytext);
+printf("Line %d, column %d: invalid escape sequence (%s)\n", line_number, column_number, yytext);
 string_has_error = 1;
 column_number += yyleng;
 }
 <STRLIT>\" {
 if (!string_has_error && lex_flag) { printf("STRLIT(\"%s\")\n", string_buffer); }
+PASS_TOKEN_STRLIT();
 string_buffer[0] = '\0';
 column_number += yyleng;
 BEGIN(INITIAL);
+return STRINGLIT;
 }
 <STRLIT><<EOF>> {
-printf("Line %d, col %d: unterminated string literal\n",
+printf("Line %d, column %d: unterminated string literal\n",
 string_start_line, string_start_column);
 string_buffer[0] = '\0';
 BEGIN(INITIAL);
 }
 <STRLIT>\r\n|\r|\n {
-printf("Line %d, col %d: unterminated string literal\n",
+printf("Line %d, column %d: unterminated string literal\n",
 string_start_line, string_start_column);
 string_buffer[0] = '\0';
 line_number++;
@@ -106,63 +119,117 @@ BEGIN(INITIAL);
 <STRLIT>.               { strncat(string_buffer, yytext, 1); column_number += yyleng; }
 
 {float_literal} { if (lex_flag) printf("DECIMAL(%s)\n", yytext); 
-                  column_number += yyleng; }
+                  column_number += yyleng; 
+                  PASS_TOKEN();
+                  return DECIMAL; }
 {int_literal}   { if (lex_flag) printf("NATURAL(%s)\n", yytext); 
-                  column_number += yyleng; }
+                  column_number += yyleng; 
+                  PASS_TOKEN_NATURAL();
+                  return NATURAL; }
 
-"true"|"false"          { if(lex_flag) printf("BOOLLIT(%s)\n", yytext);  column_number += yyleng; }
-"&&"                   	{ if(lex_flag) printf("AND\n");  column_number += yyleng; }
-"="                     { if(lex_flag) printf("ASSIGN\n");  column_number += yyleng; }
-"*"                     { if(lex_flag) printf("STAR\n");  column_number += yyleng; }
-","                     { if(lex_flag) printf("COMMA\n");  column_number += yyleng; }
-"/"                     { if(lex_flag) printf("DIV\n");  column_number += yyleng; }
-"=="                    { if(lex_flag) printf("EQ\n");  column_number += yyleng; }
-">="                    { if(lex_flag) printf("GE\n");  column_number += yyleng; }
-">"                     { if(lex_flag) printf("GT\n");  column_number += yyleng; }
-"{"                     { if(lex_flag) printf("LBRACE\n");  column_number += yyleng; }
-"<="                    { if(lex_flag) printf("LE\n");  column_number += yyleng; }
-"("                     { if(lex_flag) printf("LPAR\n");  column_number += yyleng; }
-"["                     { if(lex_flag) printf("LSQ\n");  column_number += yyleng; }
-"<"                     { if(lex_flag) printf("LT\n");  column_number += yyleng; }
-"-"                     { if(lex_flag) printf("MINUS\n");  column_number += yyleng; }
-"%"                     { if(lex_flag) printf("MOD\n");  column_number += yyleng; }
-"!="                    { if(lex_flag) printf("NE\n");  column_number += yyleng; }
-"!"                     { if(lex_flag) printf("NOT\n");  column_number += yyleng; }
-"||"                    { if(lex_flag) printf("OR\n");  column_number += yyleng; }
-"+"                     { if(lex_flag) printf("PLUS\n");  column_number += yyleng; }
-"}"                     { if(lex_flag) printf("RBRACE\n"); column_number += yyleng; }
-")"                     { if(lex_flag) printf("RPAR\n");  column_number += yyleng; }
-"]"                     { if(lex_flag) printf("RSQ\n");  column_number += yyleng; }
-";"                     { if(lex_flag) printf("SEMICOLON\n");  column_number += yyleng; }
-"->"                    { if(lex_flag) printf("ARROW\n");  column_number += yyleng; }
-"<<"                    { if(lex_flag) printf("LSHIFT\n");  column_number += yyleng; }
-">>"                    { if(lex_flag) printf("RSHIFT\n");  column_number += yyleng; }
-"^"                     { if(lex_flag) printf("XOR\n");  column_number += yyleng; }
-"boolean"               { if(lex_flag) printf("BOOL\n");  column_number += yyleng; }
-"class"                 { if(lex_flag) printf("CLASS\n");  column_number += yyleng; }
-".length"               { if(lex_flag) printf("DOTLENGTH\n");  column_number += yyleng; }
-"double"                { if(lex_flag) printf("DOUBLE\n");  column_number += yyleng; }
-"else"                  { if(lex_flag) printf("ELSE\n");  column_number += yyleng; }
-"if"                    { if(lex_flag) printf("IF\n");  column_number += yyleng; }
-"int"                   { if(lex_flag) printf("INT\n");  column_number += yyleng; }
-"System.out.print"     	{ if(lex_flag) printf("PRINT\n");  column_number += yyleng; }
-"Integer.parseInt"      { if(lex_flag) printf("PARSEINT\n");  column_number += yyleng; }
-"String"                { if(lex_flag) printf("STRING\n");  column_number += yyleng; }
-"public"                { if(lex_flag) printf("PUBLIC\n");  column_number += yyleng; }
-"return"                { if(lex_flag) printf("RETURN\n");  column_number += yyleng; }
-"static"                { if(lex_flag) printf("STATIC\n");  column_number += yyleng; }
-"void"                  { if(lex_flag) printf("VOID\n");  column_number += yyleng; }
-"while"                 { if(lex_flag) printf("WHILE\n");  column_number += yyleng; }
+"true"|"false"          { if(lex_flag) printf("BOOLLIT(%s)\n", yytext);  
+                          column_number += yyleng;
+                          PASS_TOKEN();
+                          return BOOLLIT; }
+"&&"                   	{ if(lex_flag) printf("AND\n");  column_number += yyleng;
+                          return AND; }
+"="                     { if(lex_flag) printf("ASSIGN\n");  column_number += yyleng;
+                          return ASSIGN; }
+"*"                     { if(lex_flag) printf("STAR\n");  column_number += yyleng;
+                          return STAR; }
+","                     { if(lex_flag) printf("COMMA\n");  column_number += yyleng;
+                          return COMMA; }
+"/"                     { if(lex_flag) printf("DIV\n");  column_number += yyleng;
+                          return DIV; }
+"=="                    { if(lex_flag) printf("EQ\n");  column_number += yyleng;
+                          return EQ; }
+">="                    { if(lex_flag) printf("GE\n");  column_number += yyleng;
+                          return GE; }
+">"                     { if(lex_flag) printf("GT\n");  column_number += yyleng;
+                          return GT; }
+"{"                     { if(lex_flag) printf("LBRACE\n");  column_number += yyleng;
+                          return LBRACE; }
+"<="                    { if(lex_flag) printf("LE\n");  column_number += yyleng;
+                          return LE; }
+"("                     { if(lex_flag) printf("LPAR\n");  column_number += yyleng;
+                          return LPAR; }
+"["                     { if(lex_flag) printf("LSQ\n");  column_number += yyleng;
+                          return LSQ; }
+"<"                     { if(lex_flag) printf("LT\n");  column_number += yyleng;
+                          return LT; }
+"-"                     { if(lex_flag) printf("MINUS\n");  column_number += yyleng;
+                          return MINUS; }
+"%"                     { if(lex_flag) printf("MOD\n");  column_number += yyleng;
+                          return MOD; }
+"!="                    { if(lex_flag) printf("NE\n");  column_number += yyleng;
+                          return NE; }
+"!"                     { if(lex_flag) printf("NOT\n");  column_number += yyleng;
+                          return NOT; }
+"||"                    { if(lex_flag) printf("OR\n");  column_number += yyleng;
+                          return OR; }
+"+"                     { if(lex_flag) printf("PLUS\n");  column_number += yyleng;
+                          return PLUS; }
+"}"                     { if(lex_flag) printf("RBRACE\n"); column_number += yyleng;
+                          return RBRACE; }
+")"                     { if(lex_flag) printf("RPAR\n");  column_number += yyleng;
+                          return RPAR; }
+"]"                     { if(lex_flag) printf("RSQ\n");  column_number += yyleng;
+                          return RSQ; }
+";"                     { if(lex_flag) printf("SEMICOLON\n");  column_number += yyleng;
+                          return SEMICOLON; }
+"->"                    { if(lex_flag) printf("ARROW\n");  column_number += yyleng;
+                          return ARROW; }
+"<<"                    { if(lex_flag) printf("LSHIFT\n");  column_number += yyleng;
+                          return LSHIFT; }
+">>"                    { if(lex_flag) printf("RSHIFT\n");  column_number += yyleng;
+                          return RSHIFT; }
+"^"                     { if(lex_flag) printf("XOR\n");  column_number += yyleng;
+                          return XOR; }
+"boolean"               { if(lex_flag) printf("BOOL\n");  column_number += yyleng;
+                          return BOOL; }
+"class"                 { if(lex_flag) printf("CLASS\n");  column_number += yyleng;
+                          return CLASS; }
+".length"               { if(lex_flag) printf("DOTLENGTH\n");  column_number += yyleng;
+                          return DOTLENGTH; }
+"double"                { if(lex_flag) printf("DOUBLE\n");  column_number += yyleng;
+                          return DOUBLE; }
+"else"                  { if(lex_flag) printf("ELSE\n");  column_number += yyleng;
+                          return ELSE; }
+"if"                    { if(lex_flag) printf("IF\n");  column_number += yyleng;
+                          return IF; }
+"int"                   { if(lex_flag) printf("INT\n");  column_number += yyleng;
+                          return INT; }
+"System.out.print"     	{ if(lex_flag) printf("PRINT\n");  column_number += yyleng;
+                          return PRINT; }
+"Integer.parseInt"      { if(lex_flag) printf("PARSEINT\n");  column_number += yyleng;
+                          return PARSEINT; }
+"String"                { if(lex_flag) printf("STRING\n");  column_number += yyleng;
+                          return STRING; }
+"public"                { if(lex_flag) printf("PUBLIC\n");  column_number += yyleng;
+                          return PUBLIC; }
+"return"                { if(lex_flag) printf("RETURN\n");  column_number += yyleng;
+                          return RETURN; }
+"static"                { if(lex_flag) printf("STATIC\n");  column_number += yyleng;
+                          return STATIC; }
+"void"                  { if(lex_flag) printf("VOID\n");  column_number += yyleng;
+                          return VOID; }
+"while"                 { if(lex_flag) printf("WHILE\n");  column_number += yyleng;
+                          return WHILE; }
 
-{reserved_keywords}     { if(lex_flag) { printf("RESERVED(%s)\n", yytext); } column_number += yyleng; }
+{reserved_keywords}     { if(lex_flag) { printf("RESERVED(%s)\n", yytext); }
+                          column_number += yyleng;
+                          PASS_TOKEN();
+                          return RESERVED; }
 
 ({character}|_|\$)({character}|_|\$|{digit})* {
 if (lex_flag) { printf("IDENTIFIER(%s)\n", yytext); }
 column_number += yyleng;
+PASS_TOKEN();
+return IDENTIFIER;
 }
 
 . {
-printf("Line %d, col %d: illegal character (%s)\n", line_number, column_number, yytext);
+printf("Line %d, column %d: illegal character (%s)\n", line_number, column_number, yytext);
 column_number += yyleng;
 }
 
@@ -177,7 +244,7 @@ int main(int argc, char **argv) {
         return 0;
     }
 
-    yylex();
+    yyparse();
 
     return 0;
 }
