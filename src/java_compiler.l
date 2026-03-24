@@ -10,6 +10,8 @@
 
 	int string_has_error = 0;
 
+    int lex_flag = 0;
+
     char string_buffer[1024] = "\0";
 %}
 
@@ -21,7 +23,7 @@ float_literal   ({dec_part}"."({dec_part})?({exponent})?)|("."{dec_part}({expone
 character    [a-zA-Z]
 open_block_comment   "/*"
 close_block_comment  "*/"
-reserved_keywords "++"|"--"|"null"|"this"|"new"|"abstract"|"assert"|"break"|"byte"|"case"|"char"|"catch"|"const"|"continue"|"default"|"do"|"enum"|"extends"|"final"|"finally"|"float"|"for"|"goto"|"implements"|"import"|"Integer"|"instanceof"|"interface"|"long"|"native"|"package"|"private"|"protected"|"short"|"static"|"strict"|"strictfp"|"super"|"switch"|"System"|"synchronized"|"throw"|"throws"|"transient"|"try"|"volatile"|"while"|"open"|"module"|"requires"|"transitive"|"exports"|"opens"|"uses"|"provides"
+reserved_keywords "++"|"--"|"null"|"this"|"new"|"abstract"|"assert"|"break"|"byte"|"case"|"char"|"catch"|"const"|"continue"|"default"|"do"|"enum"|"extends"|"final"|"finally"|"float"|"for"|"goto"|"implements"|"import"|"Integer"|"instanceof"|"interface"|"long"|"native"|"package"|"private"|"protected"|"short"|"static"|"strict"|"strictfp"|"super"|"switch"|"System"|"synchronized"|"throw"|"throws"|"transient"|"try"|"volatile"|"while"|"open"|"module"|"transitive"|"exports"|"opens"
 
 %X BLOCK_COMMENT STRLIT
 
@@ -81,9 +83,7 @@ string_has_error = 1;
 column_number += yyleng;
 }
 <STRLIT>\" {
-if (!string_has_error) {
-printf("STRLIT(\"%s\")\n", string_buffer);
-}
+if (!string_has_error && lex_flag) { printf("STRLIT(\"%s\")\n", string_buffer); }
 string_buffer[0] = '\0';
 column_number += yyleng;
 BEGIN(INITIAL);
@@ -105,57 +105,59 @@ BEGIN(INITIAL);
 
 <STRLIT>.               { strncat(string_buffer, yytext, 1); column_number += yyleng; }
 
-{float_literal} { printf("DECIMAL(%s)\n", yytext); column_number += yyleng; }
-{int_literal}   { printf("NATURAL(%s)\n", yytext); column_number += yyleng; }
+{float_literal} { if (lex_flag) printf("DECIMAL(%s)\n", yytext); 
+                  column_number += yyleng; }
+{int_literal}   { if (lex_flag) printf("NATURAL(%s)\n", yytext); 
+                  column_number += yyleng; }
 
-"true"|"false"          { printf("BOOLLIT(%s)\n", yytext); column_number += yyleng; }
-"&&"                   	{ printf("AND\n"); column_number += yyleng; }
-"="                     { printf("ASSIGN\n"); column_number += yyleng; }
-"*" { printf("STAR\n"); column_number += yyleng; }
-"," { printf("COMMA\n"); column_number += yyleng; }
-"/" { printf("DIV\n"); column_number += yyleng; }
-"=="                    { printf("EQ\n"); column_number += yyleng; }
-">="                    { printf("GE\n"); column_number += yyleng; }
-">"                     { printf("GT\n"); column_number += yyleng; }
-"{"                     { printf("LBRACE\n"); column_number += yyleng; }
-"<="                    { printf("LE\n"); column_number += yyleng; }
-"("                     { printf("LPAR\n"); column_number += yyleng; }
-"["                     { printf("LSQ\n"); column_number += yyleng; }
-"<"                     { printf("LT\n"); column_number += yyleng; }
-"-"                     { printf("MINUS\n"); column_number += yyleng; }
-"%"                     { printf("MOD\n"); column_number += yyleng; }
-"!="                    { printf("NE\n"); column_number += yyleng; }
-"!"                     { printf("NOT\n"); column_number += yyleng; }
-"||"                    { printf("OR\n"); column_number += yyleng; }
-"+"                     { printf("PLUS\n"); column_number += yyleng; }
-"}"                     { printf("RBRACE\n"); column_number += yyleng; }
-")"                     { printf("RPAR\n"); column_number += yyleng; }
-"]"                     { printf("RSQ\n"); column_number += yyleng; }
-";"                     { printf("SEMICOLON\n"); column_number += yyleng; }
-"->"                    { printf("ARROW\n"); column_number += yyleng; }
-"<<"                    { printf("LSHIFT\n"); column_number += yyleng; }
-">>"                    { printf("RSHIFT\n"); column_number += yyleng; }
-"^"                     { printf("XOR\n"); column_number += yyleng; }
-"boolean"               { printf("BOOL\n"); column_number += yyleng; }
-"class"                 { printf("CLASS\n"); column_number += yyleng; }
-".length"               { printf("DOTLENGTH\n"); column_number += yyleng; }
-"double"                { printf("DOUBLE\n"); column_number += yyleng; }
-"else"                  { printf("ELSE\n"); column_number += yyleng; }
-"if"                    { printf("IF\n"); column_number += yyleng; }
-"int"                   { printf("INT\n"); column_number += yyleng; }
-"System.out.print"     	{ printf("PRINT\n"); column_number += yyleng; }
-"Integer.parseInt"      { printf("PARSEINT\n"); column_number += yyleng; }
-"String"                { printf("STRING\n"); column_number += yyleng; }
-"public"                { printf("PUBLIC\n"); column_number += yyleng; }
-"return"                { printf("RETURN\n"); column_number += yyleng; }
-"static"                { printf("STATIC\n"); column_number += yyleng; }
-"void"                  { printf("VOID\n"); column_number += yyleng; }
-"while"                 { printf("WHILE\n"); column_number += yyleng; }
+"true"|"false"          { if(lex_flag) printf("BOOLLIT(%s)\n", yytext);  column_number += yyleng; }
+"&&"                   	{ if(lex_flag) printf("AND\n");  column_number += yyleng; }
+"="                     { if(lex_flag) printf("ASSIGN\n");  column_number += yyleng; }
+"*"                     { if(lex_flag) printf("STAR\n");  column_number += yyleng; }
+","                     { if(lex_flag) printf("COMMA\n");  column_number += yyleng; }
+"/"                     { if(lex_flag) printf("DIV\n");  column_number += yyleng; }
+"=="                    { if(lex_flag) printf("EQ\n");  column_number += yyleng; }
+">="                    { if(lex_flag) printf("GE\n");  column_number += yyleng; }
+">"                     { if(lex_flag) printf("GT\n");  column_number += yyleng; }
+"{"                     { if(lex_flag) printf("LBRACE\n");  column_number += yyleng; }
+"<="                    { if(lex_flag) printf("LE\n");  column_number += yyleng; }
+"("                     { if(lex_flag) printf("LPAR\n");  column_number += yyleng; }
+"["                     { if(lex_flag) printf("LSQ\n");  column_number += yyleng; }
+"<"                     { if(lex_flag) printf("LT\n");  column_number += yyleng; }
+"-"                     { if(lex_flag) printf("MINUS\n");  column_number += yyleng; }
+"%"                     { if(lex_flag) printf("MOD\n");  column_number += yyleng; }
+"!="                    { if(lex_flag) printf("NE\n");  column_number += yyleng; }
+"!"                     { if(lex_flag) printf("NOT\n");  column_number += yyleng; }
+"||"                    { if(lex_flag) printf("OR\n");  column_number += yyleng; }
+"+"                     { if(lex_flag) printf("PLUS\n");  column_number += yyleng; }
+"}"                     { if(lex_flag) printf("RBRACE\n"); column_number += yyleng; }
+")"                     { if(lex_flag) printf("RPAR\n");  column_number += yyleng; }
+"]"                     { if(lex_flag) printf("RSQ\n");  column_number += yyleng; }
+";"                     { if(lex_flag) printf("SEMICOLON\n");  column_number += yyleng; }
+"->"                    { if(lex_flag) printf("ARROW\n");  column_number += yyleng; }
+"<<"                    { if(lex_flag) printf("LSHIFT\n");  column_number += yyleng; }
+">>"                    { if(lex_flag) printf("RSHIFT\n");  column_number += yyleng; }
+"^"                     { if(lex_flag) printf("XOR\n");  column_number += yyleng; }
+"boolean"               { if(lex_flag) printf("BOOL\n");  column_number += yyleng; }
+"class"                 { if(lex_flag) printf("CLASS\n");  column_number += yyleng; }
+".length"               { if(lex_flag) printf("DOTLENGTH\n");  column_number += yyleng; }
+"double"                { if(lex_flag) printf("DOUBLE\n");  column_number += yyleng; }
+"else"                  { if(lex_flag) printf("ELSE\n");  column_number += yyleng; }
+"if"                    { if(lex_flag) printf("IF\n");  column_number += yyleng; }
+"int"                   { if(lex_flag) printf("INT\n");  column_number += yyleng; }
+"System.out.print"     	{ if(lex_flag) printf("PRINT\n");  column_number += yyleng; }
+"Integer.parseInt"      { if(lex_flag) printf("PARSEINT\n");  column_number += yyleng; }
+"String"                { if(lex_flag) printf("STRING\n");  column_number += yyleng; }
+"public"                { if(lex_flag) printf("PUBLIC\n");  column_number += yyleng; }
+"return"                { if(lex_flag) printf("RETURN\n");  column_number += yyleng; }
+"static"                { if(lex_flag) printf("STATIC\n");  column_number += yyleng; }
+"void"                  { if(lex_flag) printf("VOID\n");  column_number += yyleng; }
+"while"                 { if(lex_flag) printf("WHILE\n");  column_number += yyleng; }
 
-{reserved_keywords}     { printf("RESERVED(%s)\n", yytext); column_number += yyleng; }
+{reserved_keywords}     { if(lex_flag) { printf("RESERVED(%s)\n", yytext); } column_number += yyleng; }
 
 ({character}|_|\$)({character}|_|\$|{digit})* {
-printf("IDENTIFIER(%s)\n", yytext);
+if (lex_flag) { printf("IDENTIFIER(%s)\n", yytext); }
 column_number += yyleng;
 }
 
@@ -163,10 +165,20 @@ column_number += yyleng;
 printf("Line %d, col %d: illegal character (%s)\n", line_number, column_number, yytext);
 column_number += yyleng;
 }
+
 %%
+
 extern int yylex();
-int main() {
-    yylex();    /* run the lexical analysis automaton */
+int main(int argc, char **argv) {
+    if(argc >= 2 && strcmp(argv[1], "-l") == 0) {   
+        lex_flag = 1;
+        yylex();    
+
+        return 0;
+    }
+
+    yylex();
+
     return 0;
 }
 int yywrap() {  /* called on EOF, return 1 to terminate */
