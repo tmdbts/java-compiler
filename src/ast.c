@@ -96,7 +96,9 @@ void print_tree(struct node *node, int depth) {
         printf("..");
     }
 
-    if (node->token != NULL) {
+    if (node->category == StrLit && node->token != NULL) {
+        printf("%s(\"%s\")\n", category_name(node->category), node->token);
+    } else if (node->token != NULL) {
         printf("%s(%s)\n", category_name(node->category), node->token);
     } else {
         printf("%s\n", category_name(node->category));
