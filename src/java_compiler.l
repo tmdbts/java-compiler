@@ -1,13 +1,15 @@
 %{
     #include "y.tab.h"
+    #include "ast.h"
     #include <stdio.h>
     #include <stdlib.h>
     #include <string.h>
 
+    extern struct node *root;
+
     int yyparse(void);
 
 	#define PASS_TOKEN() yylval.value = strdup(yytext);
-    #define PASS_TOKEN_NATURAL() yylval.natural = atoi(yytext);
 	#define PASS_TOKEN_STRLIT() yylval.value = strdup(string_buffer);
 
     int line_number = 1;
@@ -34,7 +36,7 @@ float_literal   ({dec_part}"."({dec_part})?({exponent})?)|("."{dec_part}({expone
 character    [a-zA-Z]
 open_block_comment   "/*"
 close_block_comment  "*/"
-reserved_keywords "++"|"--"|"null"|"this"|"new"|"abstract"|"assert"|"break"|"byte"|"case"|"char"|"catch"|"const"|"continue"|"default"|"do"|"enum"|"extends"|"final"|"finally"|"float"|"for"|"goto"|"implements"|"import"|"Integer"|"instanceof"|"interface"|"long"|"native"|"package"|"private"|"protected"|"short"|"static"|"strict"|"strictfp"|"super"|"switch"|"System"|"synchronized"|"throw"|"throws"|"transient"|"try"|"volatile"|"while"|"open"|"module"|"transitive"|"exports"|"opens"
+reserved_keywords "++"|"--"|"null"|"this"|"new"|"abstract"|"assert"|"break"|"byte"|"case"|"char"|"catch"|"const"|"continue"|"default"|"do"|"enum"|"extends"|"final"|"finally"|"float"|"for"|"goto"|"implements"|"import"|"Integer"|"instanceof"|"interface"|"long"|"native"|"package"|"private"|"protected"|"short"|"strict"|"strictfp"|"super"|"switch"|"System"|"synchronized"|"throw"|"throws"|"transient"|"try"|"volatile"|"open"|"module"|"transitive"|"exports"|"opens"
 
 %X BLOCK_COMMENT STRLIT
 
@@ -95,11 +97,11 @@ column_number += yyleng;
 }
 <STRLIT>\" {
 if (!string_has_error && lex_flag) { printf("STRLIT(\"%s\")\n", string_buffer); }
-PASS_TOKEN_STRLIT();
+if (!string_has_error && !lex_flag) { PASS_TOKEN_STRLIT(); }
 string_buffer[0] = '\0';
 column_number += yyleng;
 BEGIN(INITIAL);
-return STRINGLIT;
+if (!string_has_error) return STRINGLIT;
 }
 <STRLIT><<EOF>> {
 printf("Line %d, column %d: unterminated string literal\n",
@@ -124,7 +126,7 @@ BEGIN(INITIAL);
                   return DECIMAL; }
 {int_literal}   { if (lex_flag) printf("NATURAL(%s)\n", yytext); 
                   column_number += yyleng; 
-                  PASS_TOKEN_NATURAL();
+                  PASS_TOKEN();
                   return NATURAL; }
 
 "true"|"false"          { if(lex_flag) printf("BOOLLIT(%s)\n", yytext);  
@@ -237,9 +239,18 @@ column_number += yyleng;
 
 extern int yylex();
 int main(int argc, char **argv) {
-    if(argc >= 2 && strcmp(argv[1], "-l") == 0) {   
+    if (argc >= 2 && strcmp(argv[1], "-l") == 0) {   
         lex_flag = 1;
         yylex();    
+
+        return 0;
+    }
+
+    if (argc >= 2 && strcmp(argv[1], "-t") == 0) {
+        lex_flag = 0;
+        yyparse();
+
+        print_tree(root, 0);
 
         return 0;
     }
