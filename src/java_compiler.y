@@ -207,40 +207,40 @@ Statement
     : LBRACE StatementList RBRACE
         {
             if ($2 == NULL) {
-              $$ = new_node(Block, NULL);
-          } else if ($2->next == NULL) {
-              $$ = $2->node;
-          } else {
-              $$ = new_node(Block, NULL);
-              add_children($$, $2);
-          }
+                $$ = NULL;
+            } else if ($2->next == NULL) {
+                $$ = $2->node;
+            } else {
+                $$ = new_node(Block, NULL);
+                add_children($$, $2);
+            }
         }
     | IF LPAR Expr RPAR Statement %prec LOWER_THAN_ELSE
         {
             $$ = new_node(If, NULL);
-              add_child($$, $3);
-              add_child($$, $5);
-              add_child($$, new_node(Block, NULL));
+            add_child($$, $3);
+            add_child($$, $5 ? $5 : new_node(Block, NULL));
+            add_child($$, new_node(Block, NULL));
         }
     | IF LPAR Expr RPAR Statement ELSE Statement
         {
             $$ = new_node(If, NULL);
             add_child($$, $3);
-            add_child($$, $5);
-            add_child($$, $7);
+            add_child($$, $5 ? $5 : new_node(Block, NULL));
+            add_child($$, $7 ? $7 : new_node(Block, NULL));
         }
     | WHILE LPAR Expr RPAR Statement
         {
             $$ = new_node(While, NULL);
             add_child($$, $3);
-            add_child($$, $5);
+            add_child($$, $5 ? $5 : new_node(Block, NULL));
         }
     | RETURN OptExpr SEMICOLON 
         {
             $$ = new_node(Return, NULL);
             add_child($$, $2);
         }
-    | SEMICOLON                          { $$ = new_node(Block, NULL); }
+    | SEMICOLON                          { $$ = NULL; }
     | MethodInvocation SEMICOLON         { $$ = $1; }
     | Assignment SEMICOLON               { $$ = $1; }
     | ParseArgs SEMICOLON                { $$ = $1; }
