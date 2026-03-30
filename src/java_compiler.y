@@ -6,8 +6,8 @@ extern int yylex(void);
 void yyerror(char *message);
 extern char *yytext;
 
-extern int line_number;
-extern int column_number;
+extern int token_line;
+extern int token_column;
 
 struct node *root = NULL;
 %}
@@ -386,5 +386,5 @@ PrimaryExpr
 %%
 
 void yyerror(char *message) {
-    printf("Line %d, col %d: %s: %s\n", line_number, column_number, message, yytext);
+    printf("Line %d, col %d: %s: %s\n", token_line, token_column, message, yytext);
 }
