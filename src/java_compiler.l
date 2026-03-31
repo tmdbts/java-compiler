@@ -18,6 +18,7 @@
     int token_column = 1;
     int line_number = 1;
     int column_number = 1;
+    int was_last_strlit = 0;
 
 	int block_comment_line = 1;
 	int block_comment_column = 1;
@@ -58,7 +59,7 @@ BEGIN(BLOCK_COMMENT);
 }
 <BLOCK_COMMENT>\r\n|\r|\n       { line_number++; column_number = 1; }
 <BLOCK_COMMENT><<EOF>> {
-printf("Line %d, column %d: unterminated comment\n",
+printf("Line %d, col %d: unterminated comment\n",
 block_comment_line, block_comment_column);
 BEGIN(INITIAL);
 }
@@ -73,6 +74,7 @@ string_buffer[0] = '\0';
 string_start_line = line_number;
 string_start_column = column_number;
 string_has_error = 0;
+was_last_strlit = 0;
 UPDATE_COLUMN();
 BEGIN(STRLIT);
 }
@@ -80,9 +82,9 @@ BEGIN(STRLIT);
 <STRLIT>\\[\"nrtf\\]    { strcat(string_buffer, yytext); UPDATE_COLUMN(); }
 
 <STRLIT>\\\r\n|\\\r|\\\n {
-printf("Line %d, column %d: invalid escape sequence (\\)\n", line_number, column_number);
+printf("Line %d, col %d: invalid escape sequence (\\)\n", line_number, column_number);
 string_has_error = 1;
-printf("Line %d, column %d: unterminated string literal\n",
+printf("Line %d, col %d: unterminated string literal\n",
 string_start_line, string_start_column);
 string_buffer[0] = '\0';
 line_number++;
@@ -95,7 +97,7 @@ string_has_error = 1;
 UPDATE_COLUMN();
 }
 <STRLIT>\\. {
-printf("Line %d, column %d: invalid escape sequence (%s)\n", line_number, column_number, yytext);
+printf("Line %d, col %d: invalid escape sequence (%s)\n", line_number, column_number, yytext);
 string_has_error = 1;
 UPDATE_COLUMN();
 }
@@ -104,19 +106,19 @@ if (!string_has_error && lex_flag) { printf("STRLIT(\"%s\")\n", string_buffer); 
 token_line = string_start_line;
 token_column = string_start_column;
 if (!string_has_error && !lex_flag) { PASS_TOKEN_STRLIT(); }
-string_buffer[0] = '\0';
+was_last_strlit = 1;
 UPDATE_COLUMN();
 BEGIN(INITIAL);
 if (!string_has_error) return STRINGLIT;
 }
 <STRLIT><<EOF>> {
-printf("Line %d, column %d: unterminated string literal\n",
+printf("Line %d, col %d: unterminated string literal\n",
 string_start_line, string_start_column);
 string_buffer[0] = '\0';
 BEGIN(INITIAL);
 }
 <STRLIT>\r\n|\r|\n {
-printf("Line %d, column %d: unterminated string literal\n",
+printf("Line %d, col %d: unterminated string literal\n",
 string_start_line, string_start_column);
 string_buffer[0] = '\0';
 line_number++;
@@ -133,8 +135,8 @@ BEGIN(INITIAL);
                   return DECIMAL; }
 {int_literal}   { if (lex_flag) printf("NATURAL(%s)\n", yytext); 
                   UPDATE_TOKEN_POSITION();
-                  PASS_TOKEN();
                   UPDATE_COLUMN(); 
+                  PASS_TOKEN();
                   return NATURAL; }
 
 "true"|"false"          { if(lex_flag) printf("BOOLLIT(%s)\n", yytext);  
@@ -312,6 +314,7 @@ BEGIN(INITIAL);
                           return WHILE; }
 
 {reserved_keywords}     { if(lex_flag) { printf("RESERVED(%s)\n", yytext); }
+                          UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           PASS_TOKEN();
                           return RESERVED; }
@@ -325,7 +328,8 @@ return IDENTIFIER;
 }
 
 . {
-printf("Line %d, column %d: illegal character (%s)\n", line_number, column_number, yytext);
+printf("Line %d, col %d: illegal character (%s)\n", line_number, column_number, yytext);
+UPDATE_TOKEN_POSITION();
 UPDATE_COLUMN();
 }
 
@@ -333,15 +337,14 @@ UPDATE_COLUMN();
 
 extern int yylex();
 int main(int argc, char **argv) {
-    if (argc >= 2 && strcmp(argv[1], "-l") == 0) {   
+    if (argc >= 2 && (strcmp(argv[1], "-l") == 0 || strcmp(argv[1], "-e1") == 0)) {   
         lex_flag = 1;
         yylex();    
 
         return 0;
     }
 
-    if (argc >= 2 && strcmp(argv[1], "-t") == 0) {
-        lex_flag = 0;
+    if (argc >= 2 && (strcmp(argv[1], "-t") == 0 || strcmp(argv[1], "-e2") == 0)) {
         yyparse();
 
         print_tree(root, 0);

@@ -8,6 +8,10 @@ extern char *yytext;
 
 extern int token_line;
 extern int token_column;
+extern int line_number;
+extern int column_number;
+extern int was_last_strlit;
+extern char string_buffer[];
 
 struct node *root = NULL;
 %}
@@ -85,7 +89,7 @@ FieldDecl
 
             while (current != NULL) {
                 struct node *decl = new_node(FieldDecl, NULL);
-                add_child(decl, copy_node($3));
+                add_child(decl, copy_leaf_node($3));
                 add_child(decl, current->node);
                 $$ = append_list($$, decl);
                 current = current->next;
@@ -186,7 +190,7 @@ VarDecl
 
             while (current != NULL) {
                 struct node *decl = new_node(VarDecl, NULL);
-                add_child(decl, copy_node($1));
+                add_child(decl, copy_leaf_node($1));
                 add_child(decl, current->node);
 
                 $$ = append_list($$, decl);
@@ -386,5 +390,17 @@ PrimaryExpr
 %%
 
 void yyerror(char *message) {
+    if (yytext[0] == '\0'){
+        printf("Line %d, col %d: %s: \n", line_number, column_number, message);
+
+        return;
+    }
+
+    if (was_last_strlit) {
+        printf("Line %d, col %d: %s: \"%s\"\n", token_line, token_column, message, string_buffer);
+        was_last_strlit = 0; // Reset the flag for the next error
+        return; // Skip error reporting for unterminated string literals
+    }
+
     printf("Line %d, col %d: %s: %s\n", token_line, token_column, message, yytext);
 }
