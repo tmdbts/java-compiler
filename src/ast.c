@@ -47,11 +47,13 @@ struct node *adopt2(enum category category, struct node *a, struct node *b) {
 }
 
 struct node_list *new_list(struct node *node) {
-    struct node_list *l = malloc(sizeof(struct node_list));
-    l->node = node;
-    l->next = NULL;
+    if (node == NULL) return NULL;
 
-    return l;
+    struct node_list *list = malloc(sizeof(struct node_list));
+    list->node = node;
+    list->next = NULL;
+
+    return list;
 }
 
 struct node_list *append_list(struct node_list *list, struct node *node) {
@@ -75,7 +77,8 @@ struct node_list *join_lists(struct node_list *a, struct node_list *b) {
     return a;
 }
 
-struct node *copy_node(struct node *node) {
+// shallow copy for leaf nodes only
+struct node *copy_leaf_node(struct node *node) {
     if (node == NULL) return NULL;
 
     struct node *copy = new_node(node->category, node->token);

@@ -79,7 +79,7 @@ struct node_list *append_list(struct node_list *list, struct node *node);
 
 struct node_list *join_lists(struct node_list *a, struct node_list *b);
 
-struct node *copy_node(struct node *node);
+struct node *copy_leaf_node(struct node *node);
 
 void add_children(struct node *parent, struct node_list *list);
 
