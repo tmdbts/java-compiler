@@ -27,6 +27,7 @@
 	int string_start_column = 1;
 
 	int string_has_error = 0;
+    int has_error = 0;
 
     int lex_flag = 0;
 
@@ -46,14 +47,15 @@ reserved_keywords "++"|"--"|"null"|"this"|"new"|"abstract"|"assert"|"break"|"byt
 %X BLOCK_COMMENT STRLIT
 
 %%
-\r\n|\r|\n       { line_number++; column_number = 1; }
-[ \t\f]+                { UPDATE_COLUMN(); }
+\r\n|\r|\n   { line_number++; column_number = 1; }
+[ \t\f]+     { UPDATE_COLUMN(); }
 
 "//"[^\r\n]* { UPDATE_COLUMN(); }
 
 {open_block_comment} {
 block_comment_line = line_number;
 block_comment_column = column_number;
+was_last_strlit = 0;
 UPDATE_COLUMN();
 BEGIN(BLOCK_COMMENT);
 }
@@ -129,191 +131,237 @@ BEGIN(INITIAL);
 <STRLIT>.               { strncat(string_buffer, yytext, 1); UPDATE_COLUMN(); }
 
 {float_literal} { if (lex_flag) printf("DECIMAL(%s)\n", yytext); 
+                  was_last_strlit = 0;
                   UPDATE_TOKEN_POSITION();
                   UPDATE_COLUMN();
                   PASS_TOKEN();
                   return DECIMAL; }
 {int_literal}   { if (lex_flag) printf("NATURAL(%s)\n", yytext); 
+                  was_last_strlit = 0;
                   UPDATE_TOKEN_POSITION();
                   UPDATE_COLUMN(); 
                   PASS_TOKEN();
                   return NATURAL; }
 
 "true"|"false"          { if(lex_flag) printf("BOOLLIT(%s)\n", yytext);  
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           PASS_TOKEN();
                           return BOOLLIT; }
 "&&"                   	{ if(lex_flag) printf("AND\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return AND; }
 "="                     { if(lex_flag) printf("ASSIGN\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return ASSIGN; }
 "*"                     { if(lex_flag) printf("STAR\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return STAR; }
 ","                     { if(lex_flag) printf("COMMA\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return COMMA; }
 "/"                     { if(lex_flag) printf("DIV\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return DIV; }
 "=="                    { if(lex_flag) printf("EQ\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return EQ; }
 ">="                    { if(lex_flag) printf("GE\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return GE; }
 ">"                     { if(lex_flag) printf("GT\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return GT; }
 "{"                     { if(lex_flag) printf("LBRACE\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return LBRACE; }
 "<="                    { if(lex_flag) printf("LE\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return LE; }
 "("                     { if(lex_flag) printf("LPAR\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return LPAR; }
 "["                     { if(lex_flag) printf("LSQ\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return LSQ; }
 "<"                     { if(lex_flag) printf("LT\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return LT; }
 "-"                     { if(lex_flag) printf("MINUS\n");  
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return MINUS; }
 "%"                     { if(lex_flag) printf("MOD\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return MOD; }
 "!="                    { if(lex_flag) printf("NE\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return NE; }
 "!"                     { if(lex_flag) printf("NOT\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return NOT; }
 "||"                    { if(lex_flag) printf("OR\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return OR; }
 "+"                     { if(lex_flag) printf("PLUS\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return PLUS; }
 "}"                     { if(lex_flag) printf("RBRACE\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return RBRACE; }
 ")"                     { if(lex_flag) printf("RPAR\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return RPAR; }
 "]"                     { if(lex_flag) printf("RSQ\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return RSQ; }
 ";"                     { if(lex_flag) printf("SEMICOLON\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return SEMICOLON; }
 "->"                    { if(lex_flag) printf("ARROW\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return ARROW; }
 "<<"                    { if(lex_flag) printf("LSHIFT\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return LSHIFT; }
 ">>"                    { if(lex_flag) printf("RSHIFT\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return RSHIFT; }
 "^"                     { if(lex_flag) printf("XOR\n");  
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return XOR; }
 "boolean"               { if(lex_flag) printf("BOOL\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return BOOL; }
 "class"                 { if(lex_flag) printf("CLASS\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return CLASS; }
 ".length"               { if(lex_flag) printf("DOTLENGTH\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return DOTLENGTH; }
 "double"                { if(lex_flag) printf("DOUBLE\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return DOUBLE; }
 "else"                  { if(lex_flag) printf("ELSE\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return ELSE; }
 "if"                    { if(lex_flag) printf("IF\n"); 
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return IF; }
 "int"                   { if(lex_flag) printf("INT\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return INT; }
 "System.out.print"     	{ if(lex_flag) printf("PRINT\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return PRINT; }
 "Integer.parseInt"      { if(lex_flag) printf("PARSEINT\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return PARSEINT; }
 "String"                { if(lex_flag) printf("STRING\n");  
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return STRING; }
 "public"                { if(lex_flag) printf("PUBLIC\n");  
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return PUBLIC; }
 "return"                { if(lex_flag) printf("RETURN\n");  
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return RETURN; }
 "static"                { if(lex_flag) printf("STATIC\n");  
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return STATIC; }
 "void"                  { if(lex_flag) printf("VOID\n");
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return VOID; }
 "while"                 { if(lex_flag) printf("WHILE\n");  
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           return WHILE; }
 
 {reserved_keywords}     { if(lex_flag) { printf("RESERVED(%s)\n", yytext); }
+                          was_last_strlit = 0;
                           UPDATE_TOKEN_POSITION();
                           UPDATE_COLUMN();
                           PASS_TOKEN();
@@ -321,6 +369,7 @@ BEGIN(INITIAL);
 
 ({character}|_|\$)({character}|_|\$|{digit})* {
 if (lex_flag) { printf("IDENTIFIER(%s)\n", yytext); }
+was_last_strlit = 0;
 UPDATE_TOKEN_POSITION();
 PASS_TOKEN();
 UPDATE_COLUMN();
@@ -347,7 +396,7 @@ int main(int argc, char **argv) {
     if (argc >= 2 && (strcmp(argv[1], "-t") == 0 || strcmp(argv[1], "-e2") == 0)) {
         yyparse();
 
-        print_tree(root, 0);
+        if (!has_error) print_tree(root, 0);
 
         return 0;
     }

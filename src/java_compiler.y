@@ -12,6 +12,7 @@ extern int line_number;
 extern int column_number;
 extern int was_last_strlit;
 extern char string_buffer[];
+extern int has_error;
 
 struct node *root = NULL;
 %}
@@ -390,6 +391,8 @@ PrimaryExpr
 %%
 
 void yyerror(char *message) {
+    has_error = 1;
+
     if (yytext[0] == '\0'){
         printf("Line %d, col %d: %s: \n", line_number, column_number, message);
 
