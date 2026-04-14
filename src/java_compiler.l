@@ -9,8 +9,8 @@
 
     int yyparse(void);
 
-	#define PASS_TOKEN() yylval.value = strdup(yytext);
-	#define PASS_TOKEN_STRLIT() yylval.value = strdup(string_buffer);
+    #define PASS_TOKEN() yylval.value = strdup(yytext);
+    #define PASS_TOKEN_STRLIT() yylval.value = strdup(string_buffer);
     #define UPDATE_TOKEN_POSITION() token_line = line_number; token_column = column_number;
     #define UPDATE_COLUMN() column_number += yyleng;
 
@@ -20,13 +20,13 @@
     int column_number = 1;
     int was_last_strlit = 0;
 
-	int block_comment_line = 1;
-	int block_comment_column = 1;
+    int block_comment_line = 1;
+    int block_comment_column = 1;
 
-	int string_start_line = 1;
-	int string_start_column = 1;
+    int string_start_line = 1;
+    int string_start_column = 1;
 
-	int string_has_error = 0;
+    int string_has_error = 0;
     int has_error = 0;
 
     int lex_flag = 0;
@@ -94,7 +94,7 @@ column_number = 1;
 BEGIN(INITIAL);
 }
 <STRLIT>\\ {
-printf("Line %d, column %d: invalid escape sequence (%s)\n", line_number, column_number, yytext);
+printf("Line %d, col %d: invalid escape sequence (%s)\n", line_number, column_number, yytext);
 string_has_error = 1;
 UPDATE_COLUMN();
 }
@@ -388,7 +388,7 @@ extern int yylex();
 int main(int argc, char **argv) {
     if (argc >= 2 && (strcmp(argv[1], "-l") == 0 || strcmp(argv[1], "-e1") == 0)) {   
         lex_flag = 1;
-        yylex();    
+        while (yylex()) {}
 
         return 0;
     }

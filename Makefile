@@ -1,4 +1,4 @@
-parser:
+build:
 	@echo "Building parser... \n"
 
 	mkdir -p bin	
@@ -9,20 +9,20 @@ parser:
 
 	@echo "\nParser built successfully."
 
-lexer:
-	@echo "Building lexer...\n"
+test: build
+	@echo "Running all tests...\n"
 
-	mkdir -p bin
-	cd bin && \
-		flex ../src/java_compiler.l && \
- 		$(CC) lex.yy.c -o jucompiler
+	cd tests && bash test.sh ../bin/jucompiler
 
-	@echo "\nLexer built successfully."
+test1: build
+	@echo "Running meta1 tests...\n"
 
-test1: lexer
-	@echo "Running tests...\n"
+	cd tests && bash test.sh ../bin/jucompiler --only meta1
 
-	sh tests/test.sh -b bin/lexer -m 1 -l
+test2: build
+	@echo "Running meta2 tests...\n"
+
+	cd tests && bash test.sh ../bin/jucompiler --only meta2
 
 zip:
 	@echo "Creating zip archive...\n"

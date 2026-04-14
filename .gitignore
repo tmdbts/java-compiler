@@ -77,7 +77,8 @@ dkms.conf
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -151,3 +152,4 @@ $RECYCLE.BIN/
 
 bin/
 !tests/**/*.out
+tests/**/*.out_temp

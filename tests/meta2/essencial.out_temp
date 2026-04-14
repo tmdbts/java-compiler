@@ -1,8 +1,0 @@
-Program
-..Identifier(Teste)
-..MethodDecl
-....MethodHeader
-......Void
-......Identifier(main)
-......MethodParams
-....MethodBody
