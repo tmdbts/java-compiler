@@ -1,0 +1,49 @@
+Line 5, col 23: Symbol teste2 already defined
+Line 11, col 26: Cannot find symbol factorial(int)
+Line 11, col 26: Incompatible type undef in System.out.print statement
+===== Class ClassTeste Symbol Table =====
+teste0		int
+teste1		int
+teste2		int
+main	(String[])	void
+
+===== Method main(String[]) Symbol Table =====
+return		void
+args		String[]	param
+argument		int
+
+Program
+..Identifier(ClassTeste)
+..FieldDecl
+....Int
+....Identifier(teste0)
+..FieldDecl
+....Int
+....Identifier(teste1)
+..FieldDecl
+....Int
+....Identifier(teste2)
+..FieldDecl
+....Int
+....Identifier(teste2)
+..MethodDecl
+....MethodHeader
+......Void
+......Identifier(main)
+......MethodParams
+........ParamDecl
+..........StringArray
+..........Identifier(args)
+....MethodBody
+......VarDecl
+........Int
+........Identifier(argument)
+......Assign - int
+........Identifier(argument) - int
+........ParseArgs - int
+..........Identifier(args) - String[]
+..........Natural(0) - int
+......Print
+........Call - undef
+..........Identifier(factorial) - undef
+..........Identifier(argument) - int

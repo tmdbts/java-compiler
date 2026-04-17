@@ -1,0 +1,118 @@
+Line 19, col 20: Symbol a(int) already defined
+Line 5, col 8: Number 2147483648 out of bounds
+Line 15, col 8: Number 2147483649 out of bounds
+Line 16, col 6: Operator = cannot be applied to types int, boolean
+Line 25, col 26: Cannot find symbol s
+Line 25, col 9: Operator Integer.parseInt cannot be applied to types undef, double
+===== Class NoFlags Symbol Table =====
+a	(int)	int
+a	(double)	int
+a	(boolean,int,boolean)	int
+main	(String[])	void
+
+===== Method a(int) Symbol Table =====
+return		int
+n		int	param
+a		int
+
+===== Method a(double) Symbol Table =====
+return		int
+n		double	param
+b		int
+
+===== Method a(boolean,int,boolean) Symbol Table =====
+return		int
+n		boolean	param
+a		int	param
+c		boolean	param
+d		int
+
+===== Method main(String[]) Symbol Table =====
+return		void
+args		String[]	param
+
+Program
+..Identifier(NoFlags)
+..MethodDecl
+....MethodHeader
+......Int
+......Identifier(a)
+......MethodParams
+........ParamDecl
+..........Int
+..........Identifier(n)
+....MethodBody
+......VarDecl
+........Int
+........Identifier(a)
+......Assign - int
+........Identifier(a) - int
+........Natural(2147483648) - int
+..MethodDecl
+....MethodHeader
+......Int
+......Identifier(a)
+......MethodParams
+........ParamDecl
+..........Double
+..........Identifier(n)
+....MethodBody
+......VarDecl
+........Int
+........Identifier(b)
+......Assign - int
+........Identifier(b) - int
+........Natural(21474_8_3647) - int
+..MethodDecl
+....MethodHeader
+......Int
+......Identifier(a)
+......MethodParams
+........ParamDecl
+..........Bool
+..........Identifier(n)
+........ParamDecl
+..........Int
+..........Identifier(a)
+........ParamDecl
+..........Bool
+..........Identifier(c)
+....MethodBody
+......VarDecl
+........Int
+........Identifier(d)
+......Assign - int
+........Identifier(d) - int
+........Natural(2147483649) - int
+......Assign - int
+........Identifier(d) - int
+........Identifier(c) - boolean
+..MethodDecl
+....MethodHeader
+......Int
+......Identifier(a)
+......MethodParams
+........ParamDecl
+..........Int
+..........Identifier(n)
+....MethodBody
+......VarDecl
+........Int
+........Identifier(d)
+......Assign
+........Identifier(d)
+........Natural(10_0000_00000)
+..MethodDecl
+....MethodHeader
+......Void
+......Identifier(main)
+......MethodParams
+........ParamDecl
+..........StringArray
+..........Identifier(args)
+....MethodBody
+......ParseArgs - int
+........Identifier(s) - undef
+........Decimal(2.2) - double
+......Print
+........Decimal(2e2) - double

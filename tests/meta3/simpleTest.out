@@ -1,0 +1,259 @@
+Line 6, col 9: Operator = cannot be applied to types int, double
+Line 7, col 13: Operator = cannot be applied to types int, double
+Line 8, col 9: Operator = cannot be applied to types int, double
+Line 9, col 9: Operator = cannot be applied to types int, boolean
+Line 15, col 21: Operator * cannot be applied to types String[], String[]
+Line 15, col 28: Operator + cannot be applied to types undef, String[]
+Line 15, col 43: Operator && cannot be applied to types String[], String[]
+Line 15, col 35: Operator || cannot be applied to types undef, boolean
+Line 15, col 14: Operator = cannot be applied to types String[], boolean
+Line 16, col 21: Operator * cannot be applied to types String[], int
+Line 16, col 25: Operator + cannot be applied to types undef, int
+Line 16, col 46: Operator && cannot be applied to types boolean, String[]
+Line 16, col 38: Operator || cannot be applied to types undef, boolean
+Line 16, col 14: Operator = cannot be applied to types String[], boolean
+Line 17, col 21: Operator < cannot be applied to types String[], int
+Line 17, col 25: Operator >= cannot be applied to types boolean, int
+Line 17, col 47: Operator != cannot be applied to types boolean, String[]
+Line 17, col 14: Operator = cannot be applied to types String[], boolean
+Line 18, col 21: Operator < cannot be applied to types boolean, int
+Line 18, col 33: Operator == cannot be applied to types String[], double
+Line 18, col 14: Operator = cannot be applied to types String[], boolean
+Line 19, col 21: Operator && cannot be applied to types String[], String[]
+Line 19, col 29: Operator || cannot be applied to types boolean, String[]
+Line 19, col 14: Operator = cannot be applied to types String[], boolean
+Line 20, col 14: Operator = cannot be applied to types String[], String[]
+Line 21, col 18: Operator = cannot be applied to types int, double
+Line 23, col 18: Operator = cannot be applied to types int, double
+Line 30, col 18: Operator > cannot be applied to types String[], int
+Line 31, col 16: Cannot find symbol main(int)
+Line 31, col 16: Incompatible type undef in return statement
+Line 32, col 16: Incompatible type String[] in return statement
+Line 33, col 9: Incompatible type void in return statement
+Line 37, col 12: Incompatible type double in return statement
+===== Class ThatsWhatSheSaid Symbol Table =====
+main2	()	double
+main	(String[])	int
+one	()	int
+two	()	double
+
+===== Method main2() Symbol Table =====
+return		double
+a		int
+b		double
+
+===== Method main(String[]) Symbol Table =====
+return		int
+args		String[]	param
+argument		int
+iterator		double
+
+===== Method one() Symbol Table =====
+return		int
+
+===== Method two() Symbol Table =====
+return		double
+
+Program
+..Identifier(ThatsWhatSheSaid)
+..MethodDecl
+....MethodHeader
+......Double
+......Identifier(main2)
+......MethodParams
+....MethodBody
+......VarDecl
+........Int
+........Identifier(a)
+......VarDecl
+........Double
+........Identifier(b)
+......Assign - int
+........Identifier(a) - int
+........Identifier(b) - double
+......Assign - double
+........Identifier(b) - double
+........Assign - int
+..........Identifier(a) - int
+..........Identifier(b) - double
+......Assign - int
+........Identifier(a) - int
+........Mul - double
+..........Identifier(a) - int
+..........Identifier(b) - double
+......Assign - int
+........Identifier(a) - int
+........Eq - boolean
+..........Identifier(a) - int
+..........Identifier(b) - double
+......Return
+........Identifier(a) - int
+..MethodDecl
+....MethodHeader
+......Int
+......Identifier(main)
+......MethodParams
+........ParamDecl
+..........StringArray
+..........Identifier(args)
+....MethodBody
+......VarDecl
+........Int
+........Identifier(argument)
+......VarDecl
+........Double
+........Identifier(iterator)
+......Assign - String[]
+........Identifier(args) - String[]
+........Or - boolean
+..........Add - undef
+............Mul - undef
+..............Identifier(args) - String[]
+..............Identifier(args) - String[]
+............Identifier(args) - String[]
+..........And - boolean
+............Identifier(args) - String[]
+............Identifier(args) - String[]
+......Assign - String[]
+........Identifier(args) - String[]
+........Or - boolean
+..........Add - undef
+............Mul - undef
+..............Identifier(args) - String[]
+..............Natural(1) - int
+............Call - int
+..............Identifier(main) - (String[])
+..............Identifier(args) - String[]
+..........And - boolean
+............BoolLit(true) - boolean
+............Identifier(args) - String[]
+......Assign - String[]
+........Identifier(args) - String[]
+........Ne - boolean
+..........Eq - boolean
+............Ge - boolean
+..............Lt - boolean
+................Identifier(args) - String[]
+................Natural(1) - int
+..............Call - int
+................Identifier(main) - (String[])
+................Identifier(args) - String[]
+............BoolLit(true) - boolean
+..........Identifier(args) - String[]
+......Assign - String[]
+........Identifier(args) - String[]
+........And - boolean
+..........And - boolean
+............Lt - boolean
+..............BoolLit(true) - boolean
+..............Natural(1) - int
+............Eq - boolean
+..............Identifier(args) - String[]
+..............Decimal(1.0) - double
+..........Ne - boolean
+............Natural(2) - int
+............Call - int
+..............Identifier(main) - (String[])
+..............Identifier(args) - String[]
+......Assign - String[]
+........Identifier(args) - String[]
+........Or - boolean
+..........And - boolean
+............Identifier(args) - String[]
+............Identifier(args) - String[]
+..........Identifier(args) - String[]
+......Assign - String[]
+........Identifier(args) - String[]
+........Identifier(args) - String[]
+......Assign - int
+........Identifier(argument) - int
+........Add - double
+..........Mul - int
+............Natural(1) - int
+............Identifier(argument) - int
+..........Decimal(1.0) - double
+......Assign - int
+........Identifier(argument) - int
+........ParseArgs - int
+..........Identifier(args) - String[]
+..........Sub - int
+............Length - int
+..............Identifier(args) - String[]
+............Natural(1) - int
+......Assign - int
+........Identifier(argument) - int
+........Add - double
+..........Mul - int
+............Identifier(argument) - int
+............Identifier(argument) - int
+..........Mod - double
+............Div - int
+..............Identifier(argument) - int
+..............Identifier(argument) - int
+............Identifier(iterator) - double
+......Assign - double
+........Identifier(iterator) - double
+........Identifier(argument) - int
+......If
+........Gt - boolean
+..........Identifier(argument) - int
+..........Identifier(iterator) - double
+........Block
+........Block
+......If
+........Eq - boolean
+..........Identifier(argument) - int
+..........Identifier(iterator) - double
+........Block
+........Block
+......If
+........Ge - boolean
+..........Identifier(argument) - int
+..........Identifier(iterator) - double
+........Block
+........Block
+......If
+........Gt - boolean
+..........Identifier(argument) - int
+..........Identifier(argument) - int
+........Block
+........Block
+......If
+........Gt - boolean
+..........Identifier(argument) - int
+..........Identifier(argument) - int
+........Block
+........Block
+......If
+........Gt - boolean
+..........Identifier(args) - String[]
+..........Identifier(argument) - int
+........Block
+........Block
+......Return
+........Call - undef
+..........Identifier(main) - undef
+..........Identifier(argument) - int
+......Return
+........Identifier(args) - String[]
+......Return
+..MethodDecl
+....MethodHeader
+......Int
+......Identifier(one)
+......MethodParams
+....MethodBody
+......Return
+........Natural(1) - int
+......Return
+........Decimal(1.0) - double
+..MethodDecl
+....MethodHeader
+......Double
+......Identifier(two)
+......MethodParams
+....MethodBody
+......Return
+........Natural(1) - int
+......Return
+........Decimal(1.0) - double

@@ -1,0 +1,43 @@
+Line 7, col 26: Incompatible type void in System.out.print statement
+===== Class Error Symbol Table =====
+a	(int)	void
+main	(String[])	void
+
+===== Method a(int) Symbol Table =====
+return		void
+b		int	param
+
+===== Method main(String[]) Symbol Table =====
+return		void
+args		String[]	param
+
+Program
+..Identifier(Error)
+..MethodDecl
+....MethodHeader
+......Void
+......Identifier(a)
+......MethodParams
+........ParamDecl
+..........Int
+..........Identifier(b)
+....MethodBody
+......Assign - int
+........Identifier(b) - int
+........Add - int
+..........Identifier(b) - int
+..........Natural(2) - int
+......Return
+..MethodDecl
+....MethodHeader
+......Void
+......Identifier(main)
+......MethodParams
+........ParamDecl
+..........StringArray
+..........Identifier(args)
+....MethodBody
+......Print
+........Call - void
+..........Identifier(a) - (int)
+..........Natural(3) - int

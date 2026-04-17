@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 #
 # Utilização
-#   bash test.sh ./path/to/jucompiler [--only meta1|meta2]
+#   bash test.sh ./path/to/jucompiler [--only meta1|meta2|meta3]
 #
 # Funcionalidade
-#   Compara todos os casos de teste nas pastas meta1 e meta2
+#   Compara todos os casos de teste nas pastas meta1, meta2 e meta3
 #   Ou apenas numa pasta específica com a flag --only
 #   Cria o ficheiro *casoteste*.out_temp com resultado de correr cada caso de teste
 
 if [[ -z "$1" ]]; then
     echo "Missing argument executable"
-    echo "Usage: $0 executable [--only meta1|meta2]"
+    echo "Usage: $0 executable [--only meta1|meta2|meta3]"
     echo "Example: $0 ./path/to/jucompiler"
     echo "Example: $0 ./path/to/jucompiler --only meta1"
     exit 1
@@ -26,7 +26,7 @@ while [[ $# -gt 0 ]]; do
         --only)
             if [[ -z "$2" ]]; then
                 echo "Error: --only requires a folder name"
-                echo "Usage: $0 executable [--only meta1|meta2]"
+                echo "Usage: $0 executable [--only meta1|meta2|meta3]"
                 exit 1
             fi
             only_dir="$2"
@@ -34,15 +34,15 @@ while [[ $# -gt 0 ]]; do
             ;;
         *)
             echo "Unknown argument: $1"
-            echo "Usage: $0 executable [--only meta1|meta2]"
+            echo "Usage: $0 executable [--only meta1|meta2|meta3]"
             exit 1
             ;;
     esac
 done
 
-if [[ -n "$only_dir" && "$only_dir" != "meta1" && "$only_dir" != "meta2" ]]; then
+if [[ -n "$only_dir" && "$only_dir" != "meta1" && "$only_dir" != "meta2" && "$only_dir" != "meta3" ]]; then
     echo "Error: invalid folder '$only_dir'"
-    echo "Allowed values: meta1 or meta2"
+    echo "Allowed values: meta1, meta2 or meta3"
     exit 1
 fi
 
@@ -92,6 +92,10 @@ fi
 
 if [[ -z "$only_dir" || "$only_dir" == "meta2" ]]; then
     run_folder "meta2" "-t" "_e2" "-e2"
+fi
+
+if [[ -z "$only_dir" || "$only_dir" == "meta3" ]]; then
+    run_folder "meta3" "-s" "_e3" "-e3"
 fi
 
 echo "Accepted: $accepted / $total"

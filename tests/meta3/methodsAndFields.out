@@ -1,0 +1,208 @@
+Line 28, col 71: Symbol e already defined
+Line 17, col 11: Symbol b already defined
+Line 18, col 4: Operator = cannot be applied to types int, boolean
+Line 21, col 10: Incompatible type int in return statement
+Line 30, col 7: Symbol a already defined
+Line 30, col 10: Symbol b already defined
+Line 30, col 19: Symbol e already defined
+===== Class newClass Symbol Table =====
+i		int
+b		boolean
+main	(int,int,double)	int
+pI		int
+a	(int,int,boolean)	void
+a	()	void
+test	(int,int,double,boolean,boolean)	double
+sum	(int,int)	int
+
+===== Method main(int,int,double) Symbol Table =====
+return		int
+a		int	param
+c		int	param
+d		double	param
+b		boolean
+i1		int
+
+===== Method a(int,int,boolean) Symbol Table =====
+return		void
+a		int	param
+b		int	param
+c		boolean	param
+d		int
+i		int
+f		double
+
+===== Method a() Symbol Table =====
+return		void
+
+===== Method test(int,int,double,boolean,boolean) Symbol Table =====
+return		double
+a		int	param
+b		int	param
+s		double	param
+e		boolean	param
+c		int
+d		int
+finalI		int
+
+===== Method sum(int,int) Symbol Table =====
+return		int
+k		int	param
+j		int	param
+
+Program
+..Identifier(newClass)
+..FieldDecl
+....Int
+....Identifier(i)
+..FieldDecl
+....Bool
+....Identifier(b)
+..MethodDecl
+....MethodHeader
+......Int
+......Identifier(main)
+......MethodParams
+........ParamDecl
+..........Int
+..........Identifier(a)
+........ParamDecl
+..........Int
+..........Identifier(c)
+........ParamDecl
+..........Double
+..........Identifier(d)
+....MethodBody
+......VarDecl
+........Bool
+........Identifier(b)
+......VarDecl
+........Int
+........Identifier(i1)
+......Return
+........Natural(0) - int
+..FieldDecl
+....Int
+....Identifier(pI)
+..MethodDecl
+....MethodHeader
+......Void
+......Identifier(a)
+......MethodParams
+........ParamDecl
+..........Int
+..........Identifier(a)
+........ParamDecl
+..........Int
+..........Identifier(b)
+........ParamDecl
+..........Bool
+..........Identifier(c)
+....MethodBody
+......VarDecl
+........Int
+........Identifier(d)
+......Assign - int
+........Identifier(d) - int
+........Identifier(b) - int
+......VarDecl
+........Int
+........Identifier(i)
+......VarDecl
+........Bool
+........Identifier(b)
+......Assign - int
+........Identifier(b) - int
+........BoolLit(true) - boolean
+......VarDecl
+........Double
+........Identifier(f)
+......Assign - double
+........Identifier(f) - double
+........Decimal(0.03) - double
+......Return
+........Identifier(d) - int
+..MethodDecl
+....MethodHeader
+......Void
+......Identifier(a)
+......MethodParams
+....MethodBody
+..MethodDecl
+....MethodHeader
+......Double
+......Identifier(test)
+......MethodParams
+........ParamDecl
+..........Int
+..........Identifier(a)
+........ParamDecl
+..........Int
+..........Identifier(b)
+........ParamDecl
+..........Double
+..........Identifier(s)
+........ParamDecl
+..........Bool
+..........Identifier(e)
+........ParamDecl
+..........Bool
+..........Identifier(e)
+....MethodBody
+......Call - void
+........Identifier(a) - (int,int,boolean)
+........Natural(2) - int
+........Natural(3) - int
+........BoolLit(true) - boolean
+......VarDecl
+........Int
+........Identifier(a)
+......VarDecl
+........Int
+........Identifier(b)
+......VarDecl
+........Int
+........Identifier(c)
+......VarDecl
+........Int
+........Identifier(d)
+......VarDecl
+........Int
+........Identifier(e)
+......VarDecl
+........Int
+........Identifier(finalI)
+......Assign - int
+........Identifier(finalI) - int
+........Add - int
+..........Natural(2) - int
+..........Natural(3) - int
+......Return
+........Div - double
+..........Mul - double
+............Decimal(0.02) - double
+............Decimal(0.03) - double
+..........Natural(5) - int
+..MethodDecl
+....MethodHeader
+......Int
+......Identifier(sum)
+......MethodParams
+........ParamDecl
+..........Int
+..........Identifier(k)
+........ParamDecl
+..........Int
+..........Identifier(j)
+....MethodBody
+......Call - double
+........Identifier(test) - (int,int,double,boolean,boolean)
+........Natural(2) - int
+........Natural(2) - int
+........Decimal(2.0) - double
+........BoolLit(true) - boolean
+........BoolLit(false) - boolean
+......Return
+........Add - int
+..........Identifier(k) - int
+..........Identifier(j) - int

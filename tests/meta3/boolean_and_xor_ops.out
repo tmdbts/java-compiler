@@ -1,0 +1,127 @@
+Line 27, col 11: Operator = cannot be applied to types int, boolean
+Line 28, col 18: Operator ^ cannot be applied to types double, double
+Line 28, col 11: Operator = cannot be applied to types int, undef
+===== Class ClassTeste Symbol Table =====
+main	(String[])	void
+
+===== Method main(String[]) Symbol Table =====
+return		void
+args		String[]	param
+b		boolean
+i		int
+d		double
+
+Program
+..Identifier(ClassTeste)
+..MethodDecl
+....MethodHeader
+......Void
+......Identifier(main)
+......MethodParams
+........ParamDecl
+..........StringArray
+..........Identifier(args)
+....MethodBody
+......VarDecl
+........Bool
+........Identifier(b)
+......VarDecl
+........Int
+........Identifier(i)
+......VarDecl
+........Double
+........Identifier(d)
+......Assign - boolean
+........Identifier(b) - boolean
+........And - boolean
+..........BoolLit(true) - boolean
+..........BoolLit(true) - boolean
+......Assign - boolean
+........Identifier(b) - boolean
+........And - boolean
+..........Not - boolean
+............BoolLit(true) - boolean
+..........BoolLit(true) - boolean
+......Assign - boolean
+........Identifier(b) - boolean
+........And - boolean
+..........BoolLit(true) - boolean
+..........Not - boolean
+............BoolLit(true) - boolean
+......Assign - boolean
+........Identifier(b) - boolean
+........And - boolean
+..........Not - boolean
+............BoolLit(true) - boolean
+..........Not - boolean
+............BoolLit(true) - boolean
+......Assign - boolean
+........Identifier(b) - boolean
+........Or - boolean
+..........BoolLit(true) - boolean
+..........BoolLit(true) - boolean
+......Assign - boolean
+........Identifier(b) - boolean
+........Or - boolean
+..........Not - boolean
+............BoolLit(true) - boolean
+..........BoolLit(true) - boolean
+......Assign - boolean
+........Identifier(b) - boolean
+........Or - boolean
+..........BoolLit(true) - boolean
+..........Not - boolean
+............BoolLit(true) - boolean
+......Assign - boolean
+........Identifier(b) - boolean
+........Or - boolean
+..........Not - boolean
+............BoolLit(true) - boolean
+..........Not - boolean
+............BoolLit(true) - boolean
+......Assign - boolean
+........Identifier(b) - boolean
+........Xor - boolean
+..........BoolLit(true) - boolean
+..........BoolLit(true) - boolean
+......Assign - boolean
+........Identifier(b) - boolean
+........Xor - boolean
+..........Not - boolean
+............BoolLit(true) - boolean
+..........BoolLit(true) - boolean
+......Assign - boolean
+........Identifier(b) - boolean
+........Xor - boolean
+..........BoolLit(true) - boolean
+..........Not - boolean
+............BoolLit(true) - boolean
+......Assign - boolean
+........Identifier(b) - boolean
+........Xor - boolean
+..........Not - boolean
+............BoolLit(true) - boolean
+..........Not - boolean
+............BoolLit(true) - boolean
+......Assign - int
+........Identifier(i) - int
+........Xor - int
+..........Natural(10) - int
+..........Natural(10) - int
+......Assign - int
+........Identifier(i) - int
+........Xor - boolean
+..........BoolLit(true) - boolean
+..........BoolLit(true) - boolean
+......Assign - int
+........Identifier(i) - int
+........Xor - undef
+..........Decimal(10.0) - double
+..........Decimal(10.0) - double
+......Assign - boolean
+........Identifier(b) - boolean
+........Identifier(b) - boolean
+......Assign - boolean
+........Identifier(b) - boolean
+........Not - boolean
+..........Identifier(b) - boolean

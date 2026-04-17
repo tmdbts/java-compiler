@@ -1,0 +1,165 @@
+Line 21, col 15: Operator == cannot be applied to types int, boolean
+Line 22, col 15: Operator == cannot be applied to types double, boolean
+Line 35, col 15: Operator != cannot be applied to types int, boolean
+Line 36, col 15: Operator != cannot be applied to types double, boolean
+Line 38, col 18: Operator == cannot be applied to types String[], String[]
+Line 39, col 18: Operator != cannot be applied to types String[], int
+===== Class equality_or_equity_question_mark Symbol Table =====
+main	(String[])	void
+
+===== Method main(String[]) Symbol Table =====
+return		void
+args		String[]	param
+i		int
+d		double
+b		boolean
+
+Program
+..Identifier(equality_or_equity_question_mark)
+..MethodDecl
+....MethodHeader
+......Void
+......Identifier(main)
+......MethodParams
+........ParamDecl
+..........StringArray
+..........Identifier(args)
+....MethodBody
+......VarDecl
+........Int
+........Identifier(i)
+......VarDecl
+........Double
+........Identifier(d)
+......VarDecl
+........Bool
+........Identifier(b)
+......Assign - int
+........Identifier(i) - int
+........Natural(0) - int
+......Assign - double
+........Identifier(d) - double
+........Decimal(1.1) - double
+......Assign - boolean
+........Identifier(b) - boolean
+........BoolLit(true) - boolean
+......If
+........Eq - boolean
+..........Identifier(i) - int
+..........Identifier(i) - int
+........Block
+........Block
+......If
+........Eq - boolean
+..........Identifier(i) - int
+..........Natural(1) - int
+........Block
+........Block
+......If
+........Eq - boolean
+..........Identifier(d) - double
+..........Identifier(d) - double
+........Block
+........Block
+......If
+........Eq - boolean
+..........Identifier(d) - double
+..........Decimal(1.1) - double
+........Block
+........Block
+......If
+........Eq - boolean
+..........Identifier(b) - boolean
+..........Identifier(b) - boolean
+........Block
+........Block
+......If
+........Eq - boolean
+..........Identifier(b) - boolean
+..........BoolLit(true) - boolean
+........Block
+........Block
+......If
+........Eq - boolean
+..........Identifier(i) - int
+..........Identifier(d) - double
+........Block
+........Block
+......If
+........Eq - boolean
+..........Identifier(i) - int
+..........Identifier(b) - boolean
+........Block
+........Block
+......If
+........Eq - boolean
+..........Identifier(d) - double
+..........Identifier(b) - boolean
+........Block
+........Block
+......If
+........Ne - boolean
+..........Identifier(i) - int
+..........Identifier(i) - int
+........Block
+........Block
+......If
+........Ne - boolean
+..........Identifier(i) - int
+..........Natural(1) - int
+........Block
+........Block
+......If
+........Ne - boolean
+..........Identifier(d) - double
+..........Identifier(d) - double
+........Block
+........Block
+......If
+........Ne - boolean
+..........Identifier(d) - double
+..........Decimal(1.1) - double
+........Block
+........Block
+......If
+........Ne - boolean
+..........Identifier(b) - boolean
+..........Identifier(b) - boolean
+........Block
+........Block
+......If
+........Ne - boolean
+..........Identifier(b) - boolean
+..........BoolLit(true) - boolean
+........Block
+........Block
+......If
+........Ne - boolean
+..........Identifier(i) - int
+..........Identifier(d) - double
+........Block
+........Block
+......If
+........Ne - boolean
+..........Identifier(i) - int
+..........Identifier(b) - boolean
+........Block
+........Block
+......If
+........Ne - boolean
+..........Identifier(d) - double
+..........Identifier(b) - boolean
+........Block
+........Block
+......If
+........Eq - boolean
+..........Identifier(args) - String[]
+..........Identifier(args) - String[]
+........Block
+........Block
+......If
+........Ne - boolean
+..........Identifier(args) - String[]
+..........Identifier(i) - int
+........Block
+........Block

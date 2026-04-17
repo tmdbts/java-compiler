@@ -1,0 +1,439 @@
+===== Class LocalVariables Symbol Table =====
+factorial_mas_com_muitos_mais_carateres_para_ver_se_a_memoria_esta_bem		int
+factorial_mas_com_muitos_mais_carateres_para_ver_se_a_memoria_esta_bem	(int,int,double)	void
+operators	(int,int)	int
+operators2	(int,int)	int
+n		boolean
+priority	(String[])	void
+
+===== Method factorial_mas_com_muitos_mais_carateres_para_ver_se_a_memoria_esta_bem(int,int,double) Symbol Table =====
+return		void
+n		int	param
+x		int	param
+y		double	param
+local_mas_com_muitos_mais_carateres_para_ver_se_a_memoria_esta_bem		int
+
+===== Method operators(int,int) Symbol Table =====
+return		int
+n		int	param
+x		int	param
+a		int
+b		int
+c		double
+d		double
+e		boolean
+f		boolean
+
+===== Method operators2(int,int) Symbol Table =====
+return		int
+n		int	param
+x		int	param
+a		int
+b		int
+c		double
+d		double
+e		boolean
+f		boolean
+
+===== Method priority(String[]) Symbol Table =====
+return		void
+args		String[]	param
+n		double
+a		int
+
+Program
+..Identifier(LocalVariables)
+..FieldDecl
+....Int
+....Identifier(factorial_mas_com_muitos_mais_carateres_para_ver_se_a_memoria_esta_bem)
+..MethodDecl
+....MethodHeader
+......Void
+......Identifier(factorial_mas_com_muitos_mais_carateres_para_ver_se_a_memoria_esta_bem)
+......MethodParams
+........ParamDecl
+..........Int
+..........Identifier(n)
+........ParamDecl
+..........Int
+..........Identifier(x)
+........ParamDecl
+..........Double
+..........Identifier(y)
+....MethodBody
+......VarDecl
+........Int
+........Identifier(local_mas_com_muitos_mais_carateres_para_ver_se_a_memoria_esta_bem)
+..MethodDecl
+....MethodHeader
+......Int
+......Identifier(operators)
+......MethodParams
+........ParamDecl
+..........Int
+..........Identifier(n)
+........ParamDecl
+..........Int
+..........Identifier(x)
+....MethodBody
+......VarDecl
+........Int
+........Identifier(a)
+......VarDecl
+........Int
+........Identifier(b)
+......VarDecl
+........Double
+........Identifier(c)
+......VarDecl
+........Double
+........Identifier(d)
+......VarDecl
+........Bool
+........Identifier(e)
+......VarDecl
+........Bool
+........Identifier(f)
+......Assign - int
+........Identifier(a) - int
+........Natural(1) - int
+......Assign - int
+........Identifier(b) - int
+........Natural(1) - int
+......Assign - double
+........Identifier(c) - double
+........Decimal(2.0) - double
+......Assign - double
+........Identifier(d) - double
+........Decimal(3.0) - double
+......Assign - boolean
+........Identifier(e) - boolean
+........BoolLit(true) - boolean
+......Assign - boolean
+........Identifier(f) - boolean
+........BoolLit(false) - boolean
+......Assign - int
+........Identifier(a) - int
+........Add - int
+..........Identifier(a) - int
+..........Identifier(b) - int
+......Assign - int
+........Identifier(a) - int
+........Sub - int
+..........Identifier(a) - int
+..........Identifier(b) - int
+......Assign - int
+........Identifier(a) - int
+........Mul - int
+..........Identifier(a) - int
+..........Identifier(b) - int
+......Assign - int
+........Identifier(a) - int
+........Div - int
+..........Identifier(a) - int
+..........Identifier(b) - int
+......Assign - int
+........Identifier(a) - int
+........Mod - int
+..........Identifier(a) - int
+..........Identifier(b) - int
+......Assign - double
+........Identifier(c) - double
+........Add - int
+..........Identifier(a) - int
+..........Identifier(b) - int
+......Assign - double
+........Identifier(c) - double
+........Sub - int
+..........Identifier(a) - int
+..........Identifier(b) - int
+......Assign - double
+........Identifier(c) - double
+........Mul - int
+..........Identifier(a) - int
+..........Identifier(b) - int
+......Assign - double
+........Identifier(c) - double
+........Div - int
+..........Identifier(a) - int
+..........Identifier(b) - int
+......Assign - double
+........Identifier(c) - double
+........Mod - int
+..........Identifier(a) - int
+..........Identifier(b) - int
+......Assign - double
+........Identifier(c) - double
+........Add - double
+..........Identifier(c) - double
+..........Identifier(b) - int
+......Assign - double
+........Identifier(c) - double
+........Sub - double
+..........Identifier(c) - double
+..........Identifier(b) - int
+......Assign - double
+........Identifier(c) - double
+........Mul - double
+..........Identifier(c) - double
+..........Identifier(b) - int
+......Assign - double
+........Identifier(c) - double
+........Div - double
+..........Identifier(c) - double
+..........Identifier(b) - int
+......Assign - double
+........Identifier(c) - double
+........Mod - double
+..........Identifier(c) - double
+..........Identifier(b) - int
+......Assign - double
+........Identifier(c) - double
+........Add - double
+..........Identifier(b) - int
+..........Identifier(c) - double
+......Assign - double
+........Identifier(c) - double
+........Sub - double
+..........Identifier(b) - int
+..........Identifier(c) - double
+......Assign - double
+........Identifier(c) - double
+........Mul - double
+..........Identifier(b) - int
+..........Identifier(c) - double
+......Assign - double
+........Identifier(c) - double
+........Div - double
+..........Identifier(b) - int
+..........Identifier(c) - double
+......Assign - double
+........Identifier(c) - double
+........Mod - double
+..........Identifier(b) - int
+..........Identifier(c) - double
+......Assign - double
+........Identifier(c) - double
+........Add - int
+..........Identifier(a) - int
+..........Identifier(b) - int
+......Assign - double
+........Identifier(c) - double
+........Sub - int
+..........Identifier(a) - int
+..........Identifier(b) - int
+......Assign - double
+........Identifier(c) - double
+........Mul - int
+..........Identifier(a) - int
+..........Identifier(b) - int
+......Assign - double
+........Identifier(c) - double
+........Div - int
+..........Identifier(a) - int
+..........Identifier(b) - int
+......Assign - double
+........Identifier(c) - double
+........Mod - int
+..........Identifier(a) - int
+..........Identifier(b) - int
+......Assign - boolean
+........Identifier(e) - boolean
+........Gt - boolean
+..........Identifier(a) - int
+..........Identifier(c) - double
+......Assign - boolean
+........Identifier(e) - boolean
+........Ge - boolean
+..........Identifier(a) - int
+..........Identifier(c) - double
+......Assign - boolean
+........Identifier(e) - boolean
+........Lt - boolean
+..........Identifier(a) - int
+..........Identifier(c) - double
+......Assign - boolean
+........Identifier(e) - boolean
+........Le - boolean
+..........Identifier(a) - int
+..........Identifier(c) - double
+......Assign - boolean
+........Identifier(e) - boolean
+........Eq - boolean
+..........Identifier(a) - int
+..........Identifier(c) - double
+......Assign - boolean
+........Identifier(e) - boolean
+........Ne - boolean
+..........Identifier(a) - int
+..........Identifier(c) - double
+......Assign - boolean
+........Identifier(e) - boolean
+........Gt - boolean
+..........Identifier(c) - double
+..........Identifier(a) - int
+......Assign - boolean
+........Identifier(e) - boolean
+........Ge - boolean
+..........Identifier(c) - double
+..........Identifier(a) - int
+......Assign - boolean
+........Identifier(e) - boolean
+........Lt - boolean
+..........Identifier(c) - double
+..........Identifier(a) - int
+......Assign - boolean
+........Identifier(e) - boolean
+........Le - boolean
+..........Identifier(c) - double
+..........Identifier(a) - int
+......Assign - boolean
+........Identifier(e) - boolean
+........Eq - boolean
+..........Identifier(c) - double
+..........Identifier(a) - int
+......Assign - boolean
+........Identifier(e) - boolean
+........Ne - boolean
+..........Identifier(c) - double
+..........Identifier(a) - int
+......Return
+........Identifier(a) - int
+..MethodDecl
+....MethodHeader
+......Int
+......Identifier(operators2)
+......MethodParams
+........ParamDecl
+..........Int
+..........Identifier(n)
+........ParamDecl
+..........Int
+..........Identifier(x)
+....MethodBody
+......VarDecl
+........Int
+........Identifier(a)
+......VarDecl
+........Int
+........Identifier(b)
+......VarDecl
+........Double
+........Identifier(c)
+......VarDecl
+........Double
+........Identifier(d)
+......VarDecl
+........Bool
+........Identifier(e)
+......VarDecl
+........Bool
+........Identifier(f)
+......Assign - int
+........Identifier(a) - int
+........Natural(2) - int
+......Assign - int
+........Identifier(b) - int
+........Natural(3) - int
+......Assign - double
+........Identifier(c) - double
+........Natural(2) - int
+......Assign - int
+........Identifier(a) - int
+........Add - int
+..........Natural(2) - int
+..........Natural(2) - int
+......Assign - int
+........Identifier(a) - int
+........Sub - int
+..........Identifier(a) - int
+..........Natural(2) - int
+......Assign - int
+........Identifier(a) - int
+........Mul - int
+..........Natural(2) - int
+..........Identifier(b) - int
+......Assign - double
+........Identifier(c) - double
+........Add - double
+..........Decimal(2.0) - double
+..........Identifier(b) - int
+......Assign - double
+........Identifier(c) - double
+........Sub - double
+..........Identifier(a) - int
+..........Decimal(2.0) - double
+......Assign - double
+........Identifier(c) - double
+........Mul - double
+..........Decimal(2.0) - double
+..........Decimal(2.0) - double
+......Assign - double
+........Identifier(c) - double
+........Div - int
+..........Identifier(a) - int
+..........Natural(2) - int
+......Assign - double
+........Identifier(c) - double
+........Mod - double
+..........Natural(2) - int
+..........Decimal(2.0) - double
+......Assign - boolean
+........Identifier(e) - boolean
+........Eq - boolean
+..........BoolLit(true) - boolean
+..........BoolLit(false) - boolean
+......Assign - boolean
+........Identifier(e) - boolean
+........Ne - boolean
+..........BoolLit(false) - boolean
+..........BoolLit(false) - boolean
+......Return
+........Identifier(a) - int
+..FieldDecl
+....Bool
+....Identifier(n)
+..MethodDecl
+....MethodHeader
+......Void
+......Identifier(priority)
+......MethodParams
+........ParamDecl
+..........StringArray
+..........Identifier(args)
+....MethodBody
+......VarDecl
+........Double
+........Identifier(n)
+......VarDecl
+........Int
+........Identifier(a)
+......Assign - int
+........Identifier(a) - int
+........Natural(1) - int
+......Assign - double
+........Identifier(n) - double
+........Natural(0) - int
+......Assign - double
+........Identifier(n) - double
+........Add - double
+..........Identifier(a) - int
+..........Identifier(n) - double
+......Assign - double
+........Identifier(n) - double
+........Sub - int
+..........Identifier(a) - int
+..........Identifier(a) - int
+......ParseArgs - int
+........Identifier(args) - String[]
+........Natural(0) - int
+......Print
+........Identifier(n) - double
+......Print
+........ParseArgs - int
+..........Identifier(args) - String[]
+..........Natural(0) - int
+......Print
+........Length - int
+..........Identifier(args) - String[]
+......Return

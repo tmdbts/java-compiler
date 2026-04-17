@@ -1,0 +1,58 @@
+Line 5, col 13: Incompatible type int in if statement
+Line 6, col 13: Incompatible type double in if statement
+Line 7, col 13: Incompatible type String[] in if statement
+Line 8, col 14: Incompatible type int in if statement
+===== Class if_tests Symbol Table =====
+main	(String[])	void
+
+===== Method main(String[]) Symbol Table =====
+return		void
+args		String[]	param
+a		int
+
+Program
+..Identifier(if_tests)
+..MethodDecl
+....MethodHeader
+......Void
+......Identifier(main)
+......MethodParams
+........ParamDecl
+..........StringArray
+..........Identifier(args)
+....MethodBody
+......VarDecl
+........Int
+........Identifier(a)
+......If
+........BoolLit(true) - boolean
+........Assign - int
+..........Identifier(a) - int
+..........Natural(0) - int
+........Block
+......If
+........Natural(1) - int
+........Assign - int
+..........Identifier(a) - int
+..........Natural(0) - int
+........Block
+......If
+........Decimal(1.0) - double
+........Assign - int
+..........Identifier(a) - int
+..........Natural(0) - int
+........Block
+......If
+........Identifier(args) - String[]
+........Assign - int
+..........Identifier(a) - int
+..........Natural(0) - int
+........Block
+......If
+........Lshift - int
+..........Identifier(a) - int
+..........Natural(1) - int
+........Assign - int
+..........Identifier(a) - int
+..........Natural(0) - int
+........Block

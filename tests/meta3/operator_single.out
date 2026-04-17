@@ -1,0 +1,137 @@
+Line 13, col 9: Operator = cannot be applied to types int, double
+Line 20, col 11: Operator + cannot be applied to type boolean
+Line 20, col 9: Operator = cannot be applied to types boolean, undef
+Line 21, col 11: Operator + cannot be applied to type boolean
+Line 21, col 9: Operator = cannot be applied to types boolean, undef
+Line 28, col 12: Operator .length cannot be applied to type int
+Line 29, col 12: Operator .length cannot be applied to type double
+Line 33, col 11: Operator ! cannot be applied to type int
+Line 33, col 9: Operator = cannot be applied to types int, undef
+Line 34, col 11: Operator ! cannot be applied to type double
+Line 34, col 9: Operator = cannot be applied to types double, undef
+Line 38, col 7: Reference to method f(int,int) is ambiguous
+===== Class operator_single Symbol Table =====
+main	(String[])	void
+f	(int,double)	void
+f	(double,int)	void
+
+===== Method main(String[]) Symbol Table =====
+return		void
+args		String[]	param
+i		int
+d		double
+b		boolean
+tamanho		int
+
+===== Method f(int,double) Symbol Table =====
+return		void
+a		int	param
+b		double	param
+
+===== Method f(double,int) Symbol Table =====
+return		void
+a		double	param
+b		int	param
+
+Program
+..Identifier(operator_single)
+..MethodDecl
+....MethodHeader
+......Void
+......Identifier(main)
+......MethodParams
+........ParamDecl
+..........StringArray
+..........Identifier(args)
+....MethodBody
+......VarDecl
+........Int
+........Identifier(i)
+......VarDecl
+........Double
+........Identifier(d)
+......VarDecl
+........Bool
+........Identifier(b)
+......Assign - boolean
+........Identifier(b) - boolean
+........BoolLit(false) - boolean
+......Assign - int
+........Identifier(i) - int
+........Plus - int
+..........Natural(5) - int
+......Assign - int
+........Identifier(i) - int
+........Plus - double
+..........Decimal(2.0) - double
+......Assign - double
+........Identifier(d) - double
+........Plus - int
+..........Natural(1) - int
+......Assign - double
+........Identifier(d) - double
+........Plus - double
+..........Decimal(2.0) - double
+......Assign - boolean
+........Identifier(b) - boolean
+........Plus - undef
+..........BoolLit(false) - boolean
+......Assign - boolean
+........Identifier(b) - boolean
+........Plus - undef
+..........BoolLit(true) - boolean
+......VarDecl
+........Int
+........Identifier(tamanho)
+......Assign - int
+........Identifier(tamanho) - int
+........Length - int
+..........Identifier(args) - String[]
+......Assign - int
+........Identifier(i) - int
+........Length - int
+..........Identifier(i) - int
+......Assign - int
+........Identifier(i) - int
+........Length - int
+..........Identifier(d) - double
+......Assign - int
+........Identifier(i) - int
+........Not - undef
+..........Identifier(i) - int
+......Assign - double
+........Identifier(d) - double
+........Not - undef
+..........Identifier(d) - double
+......Assign - boolean
+........Identifier(b) - boolean
+........Not - boolean
+..........Identifier(b) - boolean
+......Call - undef
+........Identifier(f) - undef
+........Natural(1) - int
+........Natural(1) - int
+..MethodDecl
+....MethodHeader
+......Void
+......Identifier(f)
+......MethodParams
+........ParamDecl
+..........Int
+..........Identifier(a)
+........ParamDecl
+..........Double
+..........Identifier(b)
+....MethodBody
+..MethodDecl
+....MethodHeader
+......Void
+......Identifier(f)
+......MethodParams
+........ParamDecl
+..........Double
+..........Identifier(a)
+........ParamDecl
+..........Int
+..........Identifier(b)
+....MethodBody

@@ -1,6 +1,7 @@
 %{
     #include "y.tab.h"
     #include "ast.h"
+    #include "semantics.h"
     #include <stdio.h>
     #include <stdlib.h>
     #include <string.h>
@@ -11,7 +12,15 @@
 
     #define PASS_TOKEN() yylval.value = strdup(yytext);
     #define PASS_TOKEN_STRLIT() yylval.value = strdup(string_buffer);
-    #define UPDATE_TOKEN_POSITION() token_line = line_number; token_column = column_number;
+    #define UPDATE_TOKEN_POSITION()                                           \
+        do {                                                                  \
+            token_line = line_number;                                         \
+            token_column = column_number;                                     \
+            yylloc.first_line = token_line;                                   \
+            yylloc.first_column = token_column;                               \
+            yylloc.last_line = token_line;                                    \
+            yylloc.last_column = token_column;                                \
+        } while (0)
     #define UPDATE_COLUMN() column_number += yyleng;
 
     int token_line = 1;
@@ -28,6 +37,7 @@
 
     int string_has_error = 0;
     int has_error = 0;
+    int has_lexical_error = 0;
 
     int lex_flag = 0;
 
@@ -61,6 +71,7 @@ BEGIN(BLOCK_COMMENT);
 }
 <BLOCK_COMMENT>\r\n|\r|\n       { line_number++; column_number = 1; }
 <BLOCK_COMMENT><<EOF>> {
+has_lexical_error = 1;
 printf("Line %d, col %d: unterminated comment\n",
 block_comment_line, block_comment_column);
 BEGIN(INITIAL);
@@ -84,6 +95,7 @@ BEGIN(STRLIT);
 <STRLIT>\\[\"nrtf\\]    { strcat(string_buffer, yytext); UPDATE_COLUMN(); }
 
 <STRLIT>\\\r\n|\\\r|\\\n {
+has_lexical_error = 1;
 printf("Line %d, col %d: invalid escape sequence (\\)\n", line_number, column_number);
 string_has_error = 1;
 printf("Line %d, col %d: unterminated string literal\n",
@@ -94,11 +106,13 @@ column_number = 1;
 BEGIN(INITIAL);
 }
 <STRLIT>\\ {
+has_lexical_error = 1;
 printf("Line %d, col %d: invalid escape sequence (%s)\n", line_number, column_number, yytext);
 string_has_error = 1;
 UPDATE_COLUMN();
 }
 <STRLIT>\\. {
+has_lexical_error = 1;
 printf("Line %d, col %d: invalid escape sequence (%s)\n", line_number, column_number, yytext);
 string_has_error = 1;
 UPDATE_COLUMN();
@@ -107,6 +121,10 @@ UPDATE_COLUMN();
 if (!string_has_error && lex_flag) { printf("STRLIT(\"%s\")\n", string_buffer); }
 token_line = string_start_line;
 token_column = string_start_column;
+yylloc.first_line = token_line;
+yylloc.first_column = token_column;
+yylloc.last_line = token_line;
+yylloc.last_column = token_column;
 if (!string_has_error && !lex_flag) { PASS_TOKEN_STRLIT(); }
 was_last_strlit = 1;
 UPDATE_COLUMN();
@@ -114,12 +132,14 @@ BEGIN(INITIAL);
 if (!string_has_error) return STRINGLIT;
 }
 <STRLIT><<EOF>> {
+has_lexical_error = 1;
 printf("Line %d, col %d: unterminated string literal\n",
 string_start_line, string_start_column);
 string_buffer[0] = '\0';
 BEGIN(INITIAL);
 }
 <STRLIT>\r\n|\r|\n {
+has_lexical_error = 1;
 printf("Line %d, col %d: unterminated string literal\n",
 string_start_line, string_start_column);
 string_buffer[0] = '\0';
@@ -377,6 +397,7 @@ return IDENTIFIER;
 }
 
 . {
+has_lexical_error = 1;
 printf("Line %d, col %d: illegal character (%s)\n", line_number, column_number, yytext);
 UPDATE_TOKEN_POSITION();
 UPDATE_COLUMN();
@@ -401,7 +422,30 @@ int main(int argc, char **argv) {
         return 0;
     }
 
+    if (argc >= 2 && strcmp(argv[1], "-s") == 0) {
+        yyparse();
+
+        if (!has_error && !has_lexical_error) {
+            check_program(root);
+            show_symbol_table();
+            printf("\n");
+            print_annotated_tree(root, 0);
+        }
+
+        return 0;
+    }
+
+    if (argc >= 2 && strcmp(argv[1], "-e3") == 0) {
+        yyparse();
+
+        if (!has_error && !has_lexical_error) check_program(root);
+
+        return 0;
+    }
+
     yyparse();
+
+    if (!has_error && !has_lexical_error) check_program(root);
 
     return 0;
 }

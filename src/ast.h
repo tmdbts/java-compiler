@@ -57,6 +57,9 @@ enum category {
 struct node {
     enum category category;
     char *token;
+    int line;
+    int column;
+    char *annotation;
     struct node_list *children;
 };
 
@@ -81,7 +84,11 @@ struct node_list *join_lists(struct node_list *a, struct node_list *b);
 
 struct node *copy_leaf_node(struct node *node);
 
+struct node *get_child(struct node *node, int index);
+
 void add_children(struct node *parent, struct node_list *list);
+
+void set_annotation(struct node *node, const char *annotation);
 
 void print_tree(struct node *node, int depth);
 

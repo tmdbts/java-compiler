@@ -1,0 +1,243 @@
+Line 3, col 9: Incompatible type void in return statement
+Line 11, col 16: Incompatible type double in return statement
+Line 16, col 14: Operator .length cannot be applied to type int
+Line 18, col 13: Operator Integer.parseInt cannot be applied to types int, int
+Line 19, col 18: Operator * cannot be applied to types boolean, boolean
+Line 19, col 13: Operator + cannot be applied to types int, undef
+Line 19, col 13: Incompatible type undef in if statement
+Line 23, col 13: Cannot find symbol b
+Line 23, col 15: Operator + cannot be applied to types undef, boolean
+Line 23, col 11: Operator = cannot be applied to types int, undef
+Line 24, col 17: Cannot find symbol b
+Line 24, col 15: Operator + cannot be applied to types int, undef
+Line 24, col 11: Operator = cannot be applied to types int, undef
+Line 25, col 13: Cannot find symbol b
+Line 25, col 15: Operator + cannot be applied to types undef, int
+Line 25, col 11: Operator = cannot be applied to types int, undef
+Line 26, col 13: Cannot find symbol b
+Line 26, col 17: Cannot find symbol c
+Line 26, col 15: Operator * cannot be applied to types undef, undef
+Line 26, col 11: Operator = cannot be applied to types int, undef
+Line 36, col 15: Operator = cannot be applied to types double, boolean
+Line 36, col 11: Operator = cannot be applied to types int, double
+Line 37, col 13: Number 123123122121 out of bounds
+Line 39, col 15: Operator = cannot be applied to types double, boolean
+Line 39, col 11: Operator = cannot be applied to types int, double
+Line 41, col 9: Cannot find symbol factorial(int,int,int)
+Line 48, col 16: Incompatible type int in return statement
+Line 49, col 16: Incompatible type boolean in return statement
+Line 50, col 16: Incompatible type double in return statement
+Line 51, col 16: Incompatible type String[] in return statement
+Line 52, col 16: Incompatible type void in return statement
+===== Class Alguns_Erros Symbol Table =====
+main1	()	int
+main2	()	double
+main3	()	int
+cenas	(String[])	int
+main	(String[])	void
+ola	(String[])	void
+
+===== Method main1() Symbol Table =====
+return		int
+
+===== Method main2() Symbol Table =====
+return		double
+a		int
+
+===== Method main3() Symbol Table =====
+return		int
+a		double
+
+===== Method cenas(String[]) Symbol Table =====
+return		int
+args		String[]	param
+x		int
+a		int
+xd		double
+
+===== Method main(String[]) Symbol Table =====
+return		void
+args		String[]	param
+i		int
+i2		int
+d		double
+b		boolean
+x		int
+
+===== Method ola(String[]) Symbol Table =====
+return		void
+args		String[]	param
+a		int
+b		boolean
+c		double
+
+Program
+..Identifier(Alguns_Erros)
+..MethodDecl
+....MethodHeader
+......Int
+......Identifier(main1)
+......MethodParams
+....MethodBody
+......Return
+..MethodDecl
+....MethodHeader
+......Double
+......Identifier(main2)
+......MethodParams
+....MethodBody
+......VarDecl
+........Int
+........Identifier(a)
+......Return
+........Identifier(a) - int
+..MethodDecl
+....MethodHeader
+......Int
+......Identifier(main3)
+......MethodParams
+....MethodBody
+......VarDecl
+........Double
+........Identifier(a)
+......Return
+........Identifier(a) - double
+..MethodDecl
+....MethodHeader
+......Int
+......Identifier(cenas)
+......MethodParams
+........ParamDecl
+..........StringArray
+..........Identifier(args)
+....MethodBody
+......Call - int
+........Identifier(cenas) - (String[])
+........Identifier(args) - String[]
+......VarDecl
+........Int
+........Identifier(x)
+......Assign - int
+........Identifier(x) - int
+........Length - int
+..........Identifier(x) - int
+......Assign - int
+........Identifier(x) - int
+........ParseArgs - int
+..........Identifier(args) - String[]
+..........Natural(0) - int
+......Assign - int
+........Identifier(x) - int
+........ParseArgs - int
+..........Identifier(x) - int
+..........Natural(0) - int
+......If
+........Add - undef
+..........Natural(2) - int
+..........Mul - undef
+............BoolLit(true) - boolean
+............BoolLit(true) - boolean
+........Block
+........Block
+......VarDecl
+........Int
+........Identifier(a)
+......Assign - int
+........Identifier(a) - int
+........Add - undef
+..........Identifier(b) - undef
+..........BoolLit(true) - boolean
+......Assign - int
+........Identifier(a) - int
+........Add - undef
+..........Natural(1) - int
+..........Identifier(b) - undef
+......Assign - int
+........Identifier(a) - int
+........Add - undef
+..........Identifier(b) - undef
+..........Natural(1) - int
+......Assign - int
+........Identifier(a) - int
+........Mul - undef
+..........Identifier(b) - undef
+..........Identifier(c) - undef
+......VarDecl
+........Double
+........Identifier(xd)
+......Assign - double
+........Identifier(xd) - double
+........Identifier(a) - int
+..MethodDecl
+....MethodHeader
+......Void
+......Identifier(main)
+......MethodParams
+........ParamDecl
+..........StringArray
+..........Identifier(args)
+....MethodBody
+......VarDecl
+........Int
+........Identifier(i)
+......VarDecl
+........Int
+........Identifier(i2)
+......VarDecl
+........Double
+........Identifier(d)
+......VarDecl
+........Bool
+........Identifier(b)
+......Assign - int
+........Identifier(i) - int
+........Assign - double
+..........Identifier(d) - double
+..........Identifier(b) - boolean
+......Assign - int
+........Identifier(i) - int
+........Natural(123123122121) - int
+......VarDecl
+........Int
+........Identifier(x)
+......Assign - int
+........Identifier(i) - int
+........Assign - double
+..........Identifier(d) - double
+..........Identifier(b) - boolean
+......Return
+......Call - undef
+........Identifier(factorial) - undef
+........Identifier(i) - int
+........Identifier(i) - int
+........Identifier(i) - int
+..MethodDecl
+....MethodHeader
+......Void
+......Identifier(ola)
+......MethodParams
+........ParamDecl
+..........StringArray
+..........Identifier(args)
+....MethodBody
+......VarDecl
+........Int
+........Identifier(a)
+......VarDecl
+........Bool
+........Identifier(b)
+......VarDecl
+........Double
+........Identifier(c)
+......Return
+........Identifier(a) - int
+......Return
+........Identifier(b) - boolean
+......Return
+........Identifier(c) - double
+......Return
+........Identifier(args) - String[]
+......Return
+........Call - void
+..........Identifier(ola) - (String[])
+..........Identifier(args) - String[]

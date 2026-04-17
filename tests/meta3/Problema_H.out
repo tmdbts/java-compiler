@@ -1,0 +1,67 @@
+Line 4, col 26: Incompatible type String[] in System.out.print statement
+Line 5, col 27: Operator .length cannot be applied to type int
+Line 7, col 26: Operator Integer.parseInt cannot be applied to types String[], double
+Line 9, col 48: Cannot find symbol e
+Line 9, col 26: Operator Integer.parseInt cannot be applied to types String[], undef
+Line 10, col 16: Incompatible type String[] in return statement
+Line 11, col 16: Operator Integer.parseInt cannot be applied to types String[], double
+Line 11, col 16: Incompatible type int in return statement
+Line 12, col 16: Incompatible type void in return statement
+Line 13, col 16: Incompatible type int in return statement
+Line 14, col 16: Incompatible type double in return statement
+===== Class teste Symbol Table =====
+xd	(String[])	void
+
+===== Method xd(String[]) Symbol Table =====
+return		void
+args		String[]	param
+d		int
+
+Program
+..Identifier(teste)
+..MethodDecl
+....MethodHeader
+......Void
+......Identifier(xd)
+......MethodParams
+........ParamDecl
+..........StringArray
+..........Identifier(args)
+....MethodBody
+......VarDecl
+........Int
+........Identifier(d)
+......Print
+........Identifier(args) - String[]
+......Print
+........Length - int
+..........Identifier(d) - int
+......Print
+........Length - int
+..........Identifier(args) - String[]
+......Print
+........ParseArgs - int
+..........Identifier(args) - String[]
+..........Decimal(2.0) - double
+......Print
+........ParseArgs - int
+..........Identifier(args) - String[]
+..........Natural(2) - int
+......Print
+........ParseArgs - int
+..........Identifier(args) - String[]
+..........Identifier(e) - undef
+......Return
+........Identifier(args) - String[]
+......Return
+........ParseArgs - int
+..........Identifier(args) - String[]
+..........Decimal(2.0) - double
+......Return
+........Call - void
+..........Identifier(xd) - (String[])
+..........Identifier(args) - String[]
+......Return
+........Identifier(d) - int
+......Return
+........Decimal(2.0) - double

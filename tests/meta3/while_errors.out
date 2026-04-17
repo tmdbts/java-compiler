@@ -1,0 +1,83 @@
+Line 9, col 15: Incompatible type int in while statement
+Line 10, col 15: Incompatible type int in while statement
+Line 11, col 15: Incompatible type double in while statement
+Line 12, col 15: Incompatible type double in while statement
+Line 13, col 16: Incompatible type int in while statement
+Line 14, col 19: Operator << cannot be applied to types boolean, boolean
+Line 14, col 19: Incompatible type undef in while statement
+Line 15, col 16: Operator << cannot be applied to types boolean, boolean
+Line 15, col 16: Incompatible type undef in while statement
+Line 16, col 16: Incompatible type int in while statement
+===== Class while_errors Symbol Table =====
+main	(String[])	void
+
+===== Method main(String[]) Symbol Table =====
+return		void
+args		String[]	param
+i		int
+b		boolean
+d		double
+
+Program
+..Identifier(while_errors)
+..MethodDecl
+....MethodHeader
+......Void
+......Identifier(main)
+......MethodParams
+........ParamDecl
+..........StringArray
+..........Identifier(args)
+....MethodBody
+......VarDecl
+........Int
+........Identifier(i)
+......VarDecl
+........Bool
+........Identifier(b)
+......VarDecl
+........Double
+........Identifier(d)
+......While
+........Identifier(b) - boolean
+........Block
+......While
+........BoolLit(true) - boolean
+........Block
+......While
+........Identifier(i) - int
+........Block
+......While
+........Natural(1) - int
+........Block
+......While
+........Identifier(d) - double
+........Block
+......While
+........Decimal(1.1) - double
+........Block
+......While
+........Lshift - int
+..........Natural(1) - int
+..........Natural(1) - int
+........Block
+......While
+........Lshift - undef
+..........BoolLit(true) - boolean
+..........BoolLit(true) - boolean
+........Block
+......While
+........Lshift - undef
+..........Identifier(b) - boolean
+..........Identifier(b) - boolean
+........Block
+......While
+........Xor - int
+..........Natural(1) - int
+..........Natural(1) - int
+........Block
+......While
+........Xor - boolean
+..........BoolLit(true) - boolean
+..........BoolLit(false) - boolean
+........Block

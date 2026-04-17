@@ -1,0 +1,201 @@
+Line 10, col 11: Operator = cannot be applied to types double, boolean
+Line 15, col 15: Operator * cannot be applied to types int, boolean
+Line 15, col 11: Operator = cannot be applied to types double, undef
+Line 23, col 13: Cannot find symbol fun_di(int,double)
+Line 23, col 11: Operator = cannot be applied to types double, undef
+Line 24, col 13: Cannot find symbol fun_di(double,double)
+Line 24, col 11: Operator = cannot be applied to types double, undef
+Line 27, col 13: Cannot find symbol fun_ii(double,int)
+Line 27, col 11: Operator = cannot be applied to types double, undef
+Line 28, col 13: Cannot find symbol fun_ii(int,double)
+Line 28, col 11: Operator = cannot be applied to types double, undef
+Line 29, col 13: Cannot find symbol fun_ii(double,double)
+Line 29, col 11: Operator = cannot be applied to types double, undef
+===== Class Narrow Symbol Table =====
+main	(String[])	void
+fun_dd	(double,double)	int
+fun_di	(double,int)	int
+fun_ii	(int,int)	int
+
+===== Method main(String[]) Symbol Table =====
+return		void
+args		String[]	param
+i		int
+d		double
+b		boolean
+
+===== Method fun_dd(double,double) Symbol Table =====
+return		int
+a		double	param
+b		double	param
+
+===== Method fun_di(double,int) Symbol Table =====
+return		int
+a		double	param
+b		int	param
+
+===== Method fun_ii(int,int) Symbol Table =====
+return		int
+a		int	param
+b		int	param
+
+Program
+..Identifier(Narrow)
+..MethodDecl
+....MethodHeader
+......Void
+......Identifier(main)
+......MethodParams
+........ParamDecl
+..........StringArray
+..........Identifier(args)
+....MethodBody
+......VarDecl
+........Int
+........Identifier(i)
+......VarDecl
+........Double
+........Identifier(d)
+......VarDecl
+........Bool
+........Identifier(b)
+......Assign - double
+........Identifier(d) - double
+........Decimal(1.1) - double
+......Assign - double
+........Identifier(d) - double
+........Natural(1) - int
+......Assign - double
+........Identifier(d) - double
+........Identifier(i) - int
+......Assign - double
+........Identifier(d) - double
+........Identifier(b) - boolean
+......Assign - double
+........Identifier(d) - double
+........Mul - int
+..........Identifier(i) - int
+..........Natural(1) - int
+......Assign - double
+........Identifier(d) - double
+........Mul - double
+..........Identifier(i) - int
+..........Decimal(1.1) - double
+......Assign - double
+........Identifier(d) - double
+........Mul - double
+..........Identifier(i) - int
+..........Identifier(d) - double
+......Assign - double
+........Identifier(d) - double
+........Mul - undef
+..........Identifier(i) - int
+..........Identifier(b) - boolean
+......Assign - double
+........Identifier(d) - double
+........Call - int
+..........Identifier(fun_dd) - (double,double)
+..........Natural(1) - int
+..........Natural(2) - int
+......Assign - double
+........Identifier(d) - double
+........Call - int
+..........Identifier(fun_dd) - (double,double)
+..........Decimal(3.0) - double
+..........Natural(4) - int
+......Assign - double
+........Identifier(d) - double
+........Call - int
+..........Identifier(fun_dd) - (double,double)
+..........Decimal(5.0) - double
+..........Decimal(6.0) - double
+......Assign - double
+........Identifier(d) - double
+........Call - int
+..........Identifier(fun_di) - (double,int)
+..........Natural(1) - int
+..........Natural(1) - int
+......Assign - double
+........Identifier(d) - double
+........Call - int
+..........Identifier(fun_di) - (double,int)
+..........Decimal(1.0) - double
+..........Natural(1) - int
+......Assign - double
+........Identifier(d) - double
+........Call - undef
+..........Identifier(fun_di) - undef
+..........Natural(1) - int
+..........Decimal(1.0) - double
+......Assign - double
+........Identifier(d) - double
+........Call - undef
+..........Identifier(fun_di) - undef
+..........Decimal(1.0) - double
+..........Decimal(1.0) - double
+......Assign - double
+........Identifier(d) - double
+........Call - int
+..........Identifier(fun_ii) - (int,int)
+..........Natural(1) - int
+..........Natural(1) - int
+......Assign - double
+........Identifier(d) - double
+........Call - undef
+..........Identifier(fun_ii) - undef
+..........Decimal(1.0) - double
+..........Natural(1) - int
+......Assign - double
+........Identifier(d) - double
+........Call - undef
+..........Identifier(fun_ii) - undef
+..........Natural(1) - int
+..........Decimal(1.0) - double
+......Assign - double
+........Identifier(d) - double
+........Call - undef
+..........Identifier(fun_ii) - undef
+..........Decimal(1.0) - double
+..........Decimal(1.0) - double
+..MethodDecl
+....MethodHeader
+......Int
+......Identifier(fun_dd)
+......MethodParams
+........ParamDecl
+..........Double
+..........Identifier(a)
+........ParamDecl
+..........Double
+..........Identifier(b)
+....MethodBody
+......Return
+........Natural(1) - int
+..MethodDecl
+....MethodHeader
+......Int
+......Identifier(fun_di)
+......MethodParams
+........ParamDecl
+..........Double
+..........Identifier(a)
+........ParamDecl
+..........Int
+..........Identifier(b)
+....MethodBody
+......Return
+........Natural(1) - int
+..MethodDecl
+....MethodHeader
+......Int
+......Identifier(fun_ii)
+......MethodParams
+........ParamDecl
+..........Int
+..........Identifier(a)
+........ParamDecl
+..........Int
+..........Identifier(b)
+....MethodBody
+......Return
+........Natural(1) - int

@@ -1,0 +1,68 @@
+Line 12, col 9: Cannot find symbol operators()
+===== Class Factorial Symbol Table =====
+operators	(int)	int
+main	(String[])	void
+
+===== Method operators(int) Symbol Table =====
+return		int
+n		int	param
+x		int
+b		int
+a		int
+y		double
+
+===== Method main(String[]) Symbol Table =====
+return		void
+args		String[]	param
+
+Program
+..Identifier(Factorial)
+..MethodDecl
+....MethodHeader
+......Int
+......Identifier(operators)
+......MethodParams
+........ParamDecl
+..........Int
+..........Identifier(n)
+....MethodBody
+......VarDecl
+........Int
+........Identifier(x)
+......VarDecl
+........Int
+........Identifier(b)
+......VarDecl
+........Int
+........Identifier(a)
+......VarDecl
+........Double
+........Identifier(y)
+......Assign - int
+........Identifier(x) - int
+........Lshift - int
+..........Identifier(b) - int
+..........Identifier(a) - int
+......Assign - int
+........Identifier(b) - int
+........Mul - int
+..........Identifier(x) - int
+..........Identifier(a) - int
+......Assign - double
+........Identifier(y) - double
+........Mul - double
+..........Identifier(x) - int
+..........Add - double
+............Decimal(1.0) - double
+............Identifier(b) - int
+..MethodDecl
+....MethodHeader
+......Void
+......Identifier(main)
+......MethodParams
+........ParamDecl
+..........StringArray
+..........Identifier(args)
+....MethodBody
+......Call - undef
+........Identifier(operators) - undef

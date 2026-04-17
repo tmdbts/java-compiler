@@ -1,0 +1,137 @@
+Line 14, col 11: Operator = cannot be applied to types int, double
+Line 15, col 11: Operator = cannot be applied to types int, double
+Line 17, col 15: Operator + cannot be applied to types int, boolean
+Line 17, col 11: Operator = cannot be applied to types int, undef
+Line 18, col 15: Operator - cannot be applied to types int, boolean
+Line 18, col 11: Operator = cannot be applied to types int, undef
+Line 20, col 15: Operator + cannot be applied to types int, String[]
+Line 20, col 11: Operator = cannot be applied to types int, undef
+Line 21, col 15: Operator - cannot be applied to types int, String[]
+Line 21, col 11: Operator = cannot be applied to types int, undef
+Line 29, col 15: Operator + cannot be applied to types int, boolean
+Line 29, col 11: Operator = cannot be applied to types double, undef
+Line 30, col 15: Operator - cannot be applied to types int, boolean
+Line 30, col 11: Operator = cannot be applied to types double, undef
+Line 32, col 15: Operator + cannot be applied to types int, String[]
+Line 32, col 11: Operator = cannot be applied to types double, undef
+Line 33, col 15: Operator - cannot be applied to types int, String[]
+Line 33, col 11: Operator = cannot be applied to types double, undef
+===== Class sub_2_pewdiepie Symbol Table =====
+main	(String[])	void
+
+===== Method main(String[]) Symbol Table =====
+return		void
+args		String[]	param
+i		int
+d		double
+b		boolean
+
+Program
+..Identifier(sub_2_pewdiepie)
+..MethodDecl
+....MethodHeader
+......Void
+......Identifier(main)
+......MethodParams
+........ParamDecl
+..........StringArray
+..........Identifier(args)
+....MethodBody
+......VarDecl
+........Int
+........Identifier(i)
+......VarDecl
+........Double
+........Identifier(d)
+......VarDecl
+........Bool
+........Identifier(b)
+......Assign - int
+........Identifier(i) - int
+........Natural(1) - int
+......Assign - double
+........Identifier(d) - double
+........Decimal(1.1) - double
+......Assign - boolean
+........Identifier(b) - boolean
+........BoolLit(true) - boolean
+......Assign - int
+........Identifier(i) - int
+........Add - int
+..........Identifier(i) - int
+..........Identifier(i) - int
+......Assign - int
+........Identifier(i) - int
+........Sub - int
+..........Identifier(i) - int
+..........Identifier(i) - int
+......Assign - int
+........Identifier(i) - int
+........Add - double
+..........Identifier(i) - int
+..........Identifier(d) - double
+......Assign - int
+........Identifier(i) - int
+........Sub - double
+..........Identifier(i) - int
+..........Identifier(d) - double
+......Assign - int
+........Identifier(i) - int
+........Add - undef
+..........Identifier(i) - int
+..........Identifier(b) - boolean
+......Assign - int
+........Identifier(i) - int
+........Sub - undef
+..........Identifier(i) - int
+..........Identifier(b) - boolean
+......Assign - int
+........Identifier(i) - int
+........Add - undef
+..........Identifier(i) - int
+..........Identifier(args) - String[]
+......Assign - int
+........Identifier(i) - int
+........Sub - undef
+..........Identifier(i) - int
+..........Identifier(args) - String[]
+......Assign - double
+........Identifier(d) - double
+........Add - int
+..........Identifier(i) - int
+..........Identifier(i) - int
+......Assign - double
+........Identifier(d) - double
+........Sub - int
+..........Identifier(i) - int
+..........Identifier(i) - int
+......Assign - double
+........Identifier(d) - double
+........Add - double
+..........Identifier(i) - int
+..........Identifier(d) - double
+......Assign - double
+........Identifier(d) - double
+........Sub - double
+..........Identifier(i) - int
+..........Identifier(d) - double
+......Assign - double
+........Identifier(d) - double
+........Add - undef
+..........Identifier(i) - int
+..........Identifier(b) - boolean
+......Assign - double
+........Identifier(d) - double
+........Sub - undef
+..........Identifier(i) - int
+..........Identifier(b) - boolean
+......Assign - double
+........Identifier(d) - double
+........Add - undef
+..........Identifier(i) - int
+..........Identifier(args) - String[]
+......Assign - double
+........Identifier(d) - double
+........Sub - undef
+..........Identifier(i) - int
+..........Identifier(args) - String[]

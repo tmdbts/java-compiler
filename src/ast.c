@@ -2,12 +2,16 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 // create a node of a given category with a given lexical symbol
 struct node *new_node(enum category category, char *token) {
     struct node *new = malloc(sizeof(struct node));
     new->category = category;
     new->token = token;
+    new->line = 0;
+    new->column = 0;
+    new->annotation = NULL;
     new->children = NULL;
 
     return new;
@@ -82,7 +86,25 @@ struct node *copy_leaf_node(struct node *node) {
     if (node == NULL) return NULL;
 
     struct node *copy = new_node(node->category, node->token);
+    copy->line = node->line;
+    copy->column = node->column;
+    set_annotation(copy, node->annotation);
+
     return copy;
+}
+
+struct node *get_child(struct node *node, int index) {
+    if (node == NULL || index < 0) return NULL;
+
+    struct node_list *current = node->children;
+    while (current != NULL && index > 0) {
+        current = current->next;
+        index--;
+    }
+
+    if (current == NULL) return NULL;
+
+    return current->node;
 }
 
 void add_children(struct node *parent, struct node_list *list) {
@@ -90,6 +112,17 @@ void add_children(struct node *parent, struct node_list *list) {
         add_child(parent, list->node);
         list = list->next;
     }
+}
+
+void set_annotation(struct node *node, const char *annotation) {
+    if (node == NULL) return;
+
+    if (node->annotation != NULL) {
+        free(node->annotation);
+        node->annotation = NULL;
+    }
+
+    if (annotation != NULL) node->annotation = strdup(annotation);
 }
 
 void print_tree(struct node *node, int depth) {

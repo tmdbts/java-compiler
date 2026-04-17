@@ -1,0 +1,98 @@
+===== Class divide Symbol Table =====
+num		int
+den		int
+main	(String[])	void
+
+===== Method main(String[]) Symbol Table =====
+return		void
+args		String[]	param
+quo		int
+q		int
+r		int
+check		boolean
+
+Program
+..Identifier(divide)
+..FieldDecl
+....Int
+....Identifier(num)
+..FieldDecl
+....Int
+....Identifier(den)
+..MethodDecl
+....MethodHeader
+......Void
+......Identifier(main)
+......MethodParams
+........ParamDecl
+..........StringArray
+..........Identifier(args)
+....MethodBody
+......VarDecl
+........Int
+........Identifier(quo)
+......VarDecl
+........Int
+........Identifier(q)
+......VarDecl
+........Int
+........Identifier(r)
+......Assign - int
+........Identifier(num) - int
+........ParseArgs - int
+..........Identifier(args) - String[]
+..........Natural(0) - int
+......Assign - int
+........Identifier(den) - int
+........ParseArgs - int
+..........Identifier(args) - String[]
+..........Natural(1) - int
+......Assign - int
+........Identifier(q) - int
+........Div - int
+..........Identifier(num) - int
+..........Identifier(den) - int
+......Assign - int
+........Identifier(r) - int
+........Mod - int
+..........Identifier(num) - int
+..........Identifier(den) - int
+......Assign - int
+........Identifier(quo) - int
+........Natural(0) - int
+......While
+........Le - boolean
+..........Identifier(den) - int
+..........Identifier(num) - int
+........Block
+..........Assign - int
+............Identifier(num) - int
+............Sub - int
+..............Identifier(num) - int
+..............Identifier(den) - int
+..........Assign - int
+............Identifier(quo) - int
+............Add - int
+..............Identifier(quo) - int
+..............Natural(1) - int
+......VarDecl
+........Bool
+........Identifier(check)
+......Assign - boolean
+........Identifier(check) - boolean
+........And - boolean
+..........Eq - boolean
+............Identifier(quo) - int
+............Identifier(q) - int
+..........Eq - boolean
+............Identifier(num) - int
+............Identifier(r) - int
+......If
+........Identifier(check) - boolean
+........Block
+..........Print
+............Identifier(quo) - int
+..........Print
+............Identifier(num) - int
+........Print
+..........Identifier(check) - boolean

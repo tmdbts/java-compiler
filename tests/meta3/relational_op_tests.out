@@ -1,0 +1,475 @@
+Line 18, col 15: Operator < cannot be applied to types int, boolean
+Line 19, col 15: Operator <= cannot be applied to types int, boolean
+Line 20, col 15: Operator > cannot be applied to types int, boolean
+Line 21, col 15: Operator >= cannot be applied to types int, boolean
+Line 30, col 15: Operator < cannot be applied to types int, boolean
+Line 31, col 15: Operator <= cannot be applied to types int, boolean
+Line 32, col 15: Operator > cannot be applied to types int, boolean
+Line 33, col 15: Operator >= cannot be applied to types int, boolean
+Line 42, col 15: Operator < cannot be applied to types double, boolean
+Line 43, col 15: Operator <= cannot be applied to types double, boolean
+Line 44, col 15: Operator > cannot be applied to types double, boolean
+Line 45, col 15: Operator >= cannot be applied to types double, boolean
+Line 54, col 15: Operator < cannot be applied to types boolean, int
+Line 55, col 15: Operator <= cannot be applied to types boolean, int
+Line 56, col 15: Operator > cannot be applied to types boolean, int
+Line 57, col 15: Operator >= cannot be applied to types boolean, int
+Line 58, col 15: Operator < cannot be applied to types boolean, double
+Line 59, col 15: Operator <= cannot be applied to types boolean, double
+Line 60, col 15: Operator > cannot be applied to types boolean, double
+Line 61, col 15: Operator >= cannot be applied to types boolean, double
+Line 62, col 15: Operator < cannot be applied to types boolean, boolean
+Line 63, col 15: Operator <= cannot be applied to types boolean, boolean
+Line 64, col 15: Operator > cannot be applied to types boolean, boolean
+Line 65, col 15: Operator >= cannot be applied to types boolean, boolean
+Line 74, col 15: Operator < cannot be applied to types int, boolean
+Line 75, col 15: Operator <= cannot be applied to types int, boolean
+Line 76, col 15: Operator > cannot be applied to types int, boolean
+Line 77, col 15: Operator >= cannot be applied to types int, boolean
+===== Class time_is_relative Symbol Table =====
+main	(String[])	void
+
+===== Method main(String[]) Symbol Table =====
+return		void
+args		String[]	param
+i		int
+d		double
+b		boolean
+
+Program
+..Identifier(time_is_relative)
+..MethodDecl
+....MethodHeader
+......Void
+......Identifier(main)
+......MethodParams
+........ParamDecl
+..........StringArray
+..........Identifier(args)
+....MethodBody
+......VarDecl
+........Int
+........Identifier(i)
+......VarDecl
+........Double
+........Identifier(d)
+......VarDecl
+........Bool
+........Identifier(b)
+......Assign - int
+........Identifier(i) - int
+........Natural(0) - int
+......Assign - double
+........Identifier(d) - double
+........Decimal(1.1) - double
+......Assign - boolean
+........Identifier(b) - boolean
+........BoolLit(true) - boolean
+......If
+........Lt - boolean
+..........Identifier(i) - int
+..........Identifier(i) - int
+........Block
+........Block
+......If
+........Le - boolean
+..........Identifier(i) - int
+..........Identifier(i) - int
+........Block
+........Block
+......If
+........Gt - boolean
+..........Identifier(i) - int
+..........Identifier(i) - int
+........Block
+........Block
+......If
+........Ge - boolean
+..........Identifier(i) - int
+..........Identifier(i) - int
+........Block
+........Block
+......If
+........Lt - boolean
+..........Identifier(i) - int
+..........Identifier(d) - double
+........Block
+........Block
+......If
+........Le - boolean
+..........Identifier(i) - int
+..........Identifier(d) - double
+........Block
+........Block
+......If
+........Gt - boolean
+..........Identifier(i) - int
+..........Identifier(d) - double
+........Block
+........Block
+......If
+........Ge - boolean
+..........Identifier(i) - int
+..........Identifier(d) - double
+........Block
+........Block
+......If
+........Lt - boolean
+..........Identifier(i) - int
+..........Identifier(b) - boolean
+........Block
+........Block
+......If
+........Le - boolean
+..........Identifier(i) - int
+..........Identifier(b) - boolean
+........Block
+........Block
+......If
+........Gt - boolean
+..........Identifier(i) - int
+..........Identifier(b) - boolean
+........Block
+........Block
+......If
+........Ge - boolean
+..........Identifier(i) - int
+..........Identifier(b) - boolean
+........Block
+........Block
+......If
+........Lt - boolean
+..........Identifier(i) - int
+..........Natural(0) - int
+........Block
+........Block
+......If
+........Le - boolean
+..........Identifier(i) - int
+..........Natural(0) - int
+........Block
+........Block
+......If
+........Gt - boolean
+..........Identifier(i) - int
+..........Natural(0) - int
+........Block
+........Block
+......If
+........Ge - boolean
+..........Identifier(i) - int
+..........Natural(0) - int
+........Block
+........Block
+......If
+........Lt - boolean
+..........Identifier(i) - int
+..........Decimal(1.1) - double
+........Block
+........Block
+......If
+........Le - boolean
+..........Identifier(i) - int
+..........Decimal(1.1) - double
+........Block
+........Block
+......If
+........Gt - boolean
+..........Identifier(i) - int
+..........Decimal(1.1) - double
+........Block
+........Block
+......If
+........Ge - boolean
+..........Identifier(i) - int
+..........Decimal(1.1) - double
+........Block
+........Block
+......If
+........Lt - boolean
+..........Identifier(i) - int
+..........BoolLit(true) - boolean
+........Block
+........Block
+......If
+........Le - boolean
+..........Identifier(i) - int
+..........BoolLit(true) - boolean
+........Block
+........Block
+......If
+........Gt - boolean
+..........Identifier(i) - int
+..........BoolLit(true) - boolean
+........Block
+........Block
+......If
+........Ge - boolean
+..........Identifier(i) - int
+..........BoolLit(true) - boolean
+........Block
+........Block
+......If
+........Lt - boolean
+..........Identifier(d) - double
+..........Identifier(i) - int
+........Block
+........Block
+......If
+........Le - boolean
+..........Identifier(d) - double
+..........Identifier(i) - int
+........Block
+........Block
+......If
+........Gt - boolean
+..........Identifier(d) - double
+..........Identifier(i) - int
+........Block
+........Block
+......If
+........Ge - boolean
+..........Identifier(d) - double
+..........Identifier(i) - int
+........Block
+........Block
+......If
+........Lt - boolean
+..........Identifier(d) - double
+..........Identifier(d) - double
+........Block
+........Block
+......If
+........Le - boolean
+..........Identifier(d) - double
+..........Identifier(d) - double
+........Block
+........Block
+......If
+........Gt - boolean
+..........Identifier(d) - double
+..........Identifier(d) - double
+........Block
+........Block
+......If
+........Ge - boolean
+..........Identifier(d) - double
+..........Identifier(d) - double
+........Block
+........Block
+......If
+........Lt - boolean
+..........Identifier(d) - double
+..........Identifier(b) - boolean
+........Block
+........Block
+......If
+........Le - boolean
+..........Identifier(d) - double
+..........Identifier(b) - boolean
+........Block
+........Block
+......If
+........Gt - boolean
+..........Identifier(d) - double
+..........Identifier(b) - boolean
+........Block
+........Block
+......If
+........Ge - boolean
+..........Identifier(d) - double
+..........Identifier(b) - boolean
+........Block
+........Block
+......If
+........Lt - boolean
+..........Identifier(d) - double
+..........Natural(0) - int
+........Block
+........Block
+......If
+........Le - boolean
+..........Identifier(d) - double
+..........Natural(0) - int
+........Block
+........Block
+......If
+........Gt - boolean
+..........Identifier(d) - double
+..........Natural(0) - int
+........Block
+........Block
+......If
+........Ge - boolean
+..........Identifier(d) - double
+..........Natural(0) - int
+........Block
+........Block
+......If
+........Lt - boolean
+..........Identifier(d) - double
+..........Decimal(1.1) - double
+........Block
+........Block
+......If
+........Le - boolean
+..........Identifier(d) - double
+..........Decimal(1.1) - double
+........Block
+........Block
+......If
+........Gt - boolean
+..........Identifier(d) - double
+..........Decimal(1.1) - double
+........Block
+........Block
+......If
+........Ge - boolean
+..........Identifier(d) - double
+..........Decimal(1.1) - double
+........Block
+........Block
+......If
+........Lt - boolean
+..........Identifier(b) - boolean
+..........Identifier(i) - int
+........Block
+........Block
+......If
+........Le - boolean
+..........Identifier(b) - boolean
+..........Identifier(i) - int
+........Block
+........Block
+......If
+........Gt - boolean
+..........Identifier(b) - boolean
+..........Identifier(i) - int
+........Block
+........Block
+......If
+........Ge - boolean
+..........Identifier(b) - boolean
+..........Identifier(i) - int
+........Block
+........Block
+......If
+........Lt - boolean
+..........Identifier(b) - boolean
+..........Identifier(d) - double
+........Block
+........Block
+......If
+........Le - boolean
+..........Identifier(b) - boolean
+..........Identifier(d) - double
+........Block
+........Block
+......If
+........Gt - boolean
+..........Identifier(b) - boolean
+..........Identifier(d) - double
+........Block
+........Block
+......If
+........Ge - boolean
+..........Identifier(b) - boolean
+..........Identifier(d) - double
+........Block
+........Block
+......If
+........Lt - boolean
+..........Identifier(b) - boolean
+..........BoolLit(true) - boolean
+........Block
+........Block
+......If
+........Le - boolean
+..........Identifier(b) - boolean
+..........BoolLit(true) - boolean
+........Block
+........Block
+......If
+........Gt - boolean
+..........Identifier(b) - boolean
+..........BoolLit(true) - boolean
+........Block
+........Block
+......If
+........Ge - boolean
+..........Identifier(b) - boolean
+..........BoolLit(true) - boolean
+........Block
+........Block
+......If
+........Lt - boolean
+..........Natural(0) - int
+..........Identifier(i) - int
+........Block
+........Block
+......If
+........Le - boolean
+..........Natural(0) - int
+..........Identifier(i) - int
+........Block
+........Block
+......If
+........Gt - boolean
+..........Natural(0) - int
+..........Identifier(i) - int
+........Block
+........Block
+......If
+........Ge - boolean
+..........Natural(0) - int
+..........Identifier(i) - int
+........Block
+........Block
+......If
+........Lt - boolean
+..........Natural(0) - int
+..........Identifier(d) - double
+........Block
+........Block
+......If
+........Le - boolean
+..........Natural(0) - int
+..........Identifier(d) - double
+........Block
+........Block
+......If
+........Gt - boolean
+..........Natural(0) - int
+..........Identifier(d) - double
+........Block
+........Block
+......If
+........Ge - boolean
+..........Natural(0) - int
+..........Identifier(d) - double
+........Block
+........Block
+......If
+........Lt - boolean
+..........Natural(0) - int
+..........Identifier(b) - boolean
+........Block
+........Block
+......If
+........Le - boolean
+..........Natural(0) - int
+..........Identifier(b) - boolean
+........Block
+........Block
+......If
+........Gt - boolean
+..........Natural(0) - int
+..........Identifier(b) - boolean
+........Block
+........Block
+......If
+........Ge - boolean
+..........Natural(0) - int
+..........Identifier(b) - boolean
+........Block
+........Block
