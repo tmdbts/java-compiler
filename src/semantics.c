@@ -8,54 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-enum semantic_type {
-    TYPE_INT,
-    TYPE_DOUBLE,
-    TYPE_BOOLEAN,
-    TYPE_STRING_ARRAY,
-    TYPE_VOID,
-    TYPE_UNDEF
-};
-
-enum symbol_kind {
-    SYMBOL_FIELD,
-    SYMBOL_METHOD,
-    SYMBOL_PARAM,
-    SYMBOL_LOCAL,
-    SYMBOL_RETURN
-};
-
-struct table_entry {
-    char *name;
-    enum semantic_type type;
-    enum symbol_kind kind;
-    int in_scope;
-    struct table_entry *next;
-};
-
-struct method_info {
-    struct node *body_node;
-    char *name;
-    enum semantic_type return_type;
-    int param_count;
-    enum semantic_type *param_types;
-    char *signature;
-    int show_table;
-    int can_resolve_calls;
-    struct table_entry *entries;
-    struct table_entry *entries_tail;
-    struct method_info *next;
-};
-
-struct class_symbol {
-    char *name;
-    enum symbol_kind kind;
-    enum semantic_type type;
-    int param_count;
-    enum semantic_type *param_types;
-    char *signature;
-    struct class_symbol *next;
-};
+/* Types and structs are now defined in semantics.h */
 
 struct semantic_error {
     int line;
@@ -297,6 +250,7 @@ static struct table_entry *new_table_entry(const char *name,
     entry->type = type;
     entry->kind = kind;
     entry->in_scope = kind != SYMBOL_LOCAL;
+    entry->llvm_name = NULL;
     entry->next = NULL;
     return entry;
 }
@@ -326,6 +280,7 @@ static struct class_symbol *new_class_symbol(
     symbol->param_count = param_count;
     symbol->param_types = param_types;
     symbol->signature = dup_string(signature);
+    symbol->llvm_name = NULL;
     symbol->next = NULL;
 
     return symbol;
@@ -837,19 +792,11 @@ static enum semantic_type check_xor(struct node *node) {
     enum semantic_type left_type = check_expression(get_child(node, 0));
     enum semantic_type right_type = check_expression(get_child(node, 1));
 
-    if (left_type == TYPE_INT && right_type == TYPE_INT) {
-        annotate_type(node, TYPE_INT);
-        return TYPE_INT;
-    }
+    if (!(left_type == TYPE_INT && right_type == TYPE_INT))
+		add_binary_operator_error(node, left_type, right_type);
 
-    if (left_type == TYPE_BOOLEAN && right_type == TYPE_BOOLEAN) {
-        annotate_type(node, TYPE_BOOLEAN);
-        return TYPE_BOOLEAN;
-    }
-
-    add_binary_operator_error(node, left_type, right_type);
-    annotate_type(node, TYPE_UNDEF);
-    return TYPE_UNDEF;
+	annotate_type(node, TYPE_INT);
+	return TYPE_INT;
 }
 
 static enum semantic_type check_unary_numeric(struct node *node) {
@@ -868,14 +815,12 @@ static enum semantic_type check_unary_numeric(struct node *node) {
 static enum semantic_type check_not(struct node *node) {
     enum semantic_type type = check_expression(get_child(node, 0));
 
-    if (type == TYPE_BOOLEAN) {
-        annotate_type(node, TYPE_BOOLEAN);
-        return TYPE_BOOLEAN;
+    if (type != TYPE_BOOLEAN) {
+		add_unary_operator_error(node, type);
     }
 
-    add_unary_operator_error(node, type);
-    annotate_type(node, TYPE_UNDEF);
-    return TYPE_UNDEF;
+    annotate_type(node, TYPE_BOOLEAN);
+    return TYPE_BOOLEAN;
 }
 
 static enum semantic_type check_expression(struct node *node) {
@@ -1012,13 +957,16 @@ static void check_statement(struct node *node) {
         case Print:
             if (get_child(node, 0) != NULL &&
                 get_child(node, 0)->category == StrLit)
-                break;
+				{
+					set_annotation(get_child(node, 0), "String");
+					break;
+				}
 
-            type = check_expression(get_child(node, 0));
-            if (!is_printable_scalar(type))
-                add_statement_type_error(get_child(node, 0), node->category,
-                                         type);
-            break;
+			type = check_expression(get_child(node, 0));
+			if (!is_printable_scalar(type))
+				add_statement_type_error(get_child(node, 0), node->category, type);
+
+			break;
 
         case Assign:
         case Call:
@@ -1153,4 +1101,22 @@ void print_annotated_tree(struct node *node, int depth) {
     for (child = node->children; child != NULL; child = child->next) {
         print_annotated_tree(child->node, depth + 1);
     }
+}
+
+/* ---- Getters for code generator ---- */
+
+const char *get_class_name(void) {
+    return class_name;
+}
+
+struct class_symbol *get_class_symbols(void) {
+    return class_symbols;
+}
+
+struct method_info *get_methods(void) {
+    return methods;
+}
+
+const char *type_name_str(enum semantic_type type) {
+    return type_name(type);
 }
