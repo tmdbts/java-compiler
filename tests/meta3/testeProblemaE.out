@@ -147,7 +147,7 @@ Program
 ............BoolLit(true) - boolean
 ..........Natural(2) - int
 ........Print
-..........StrLit("olaaaa\n")
+..........StrLit("olaaaa\n") - String
 ........Block
 ......Assign - boolean
 ........Identifier(a) - boolean
@@ -462,7 +462,7 @@ Program
 ........Identifier(x1) - int
 ........Identifier(ola56) - boolean
 ......Print
-........StrLit("")
+........StrLit("") - String
 ..FieldDecl
 ....Bool
 ....Identifier(ola56)
