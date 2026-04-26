@@ -1,6 +1,13 @@
-Line 27, col 11: Operator = cannot be applied to types int, boolean
+Line 21, col 18: Operator ^ cannot be applied to types boolean, boolean
+Line 21, col 11: Operator = cannot be applied to types boolean, int
+Line 22, col 19: Operator ^ cannot be applied to types boolean, boolean
+Line 22, col 11: Operator = cannot be applied to types boolean, int
+Line 23, col 18: Operator ^ cannot be applied to types boolean, boolean
+Line 23, col 11: Operator = cannot be applied to types boolean, int
+Line 24, col 19: Operator ^ cannot be applied to types boolean, boolean
+Line 24, col 11: Operator = cannot be applied to types boolean, int
+Line 27, col 18: Operator ^ cannot be applied to types boolean, boolean
 Line 28, col 18: Operator ^ cannot be applied to types double, double
-Line 28, col 11: Operator = cannot be applied to types int, undef
 ===== Class ClassTeste Symbol Table =====
 main	(String[])	void
 
@@ -81,24 +88,24 @@ Program
 ............BoolLit(true) - boolean
 ......Assign - boolean
 ........Identifier(b) - boolean
-........Xor - boolean
+........Xor - int
 ..........BoolLit(true) - boolean
 ..........BoolLit(true) - boolean
 ......Assign - boolean
 ........Identifier(b) - boolean
-........Xor - boolean
+........Xor - int
 ..........Not - boolean
 ............BoolLit(true) - boolean
 ..........BoolLit(true) - boolean
 ......Assign - boolean
 ........Identifier(b) - boolean
-........Xor - boolean
+........Xor - int
 ..........BoolLit(true) - boolean
 ..........Not - boolean
 ............BoolLit(true) - boolean
 ......Assign - boolean
 ........Identifier(b) - boolean
-........Xor - boolean
+........Xor - int
 ..........Not - boolean
 ............BoolLit(true) - boolean
 ..........Not - boolean
@@ -110,12 +117,12 @@ Program
 ..........Natural(10) - int
 ......Assign - int
 ........Identifier(i) - int
-........Xor - boolean
+........Xor - int
 ..........BoolLit(true) - boolean
 ..........BoolLit(true) - boolean
 ......Assign - int
 ........Identifier(i) - int
-........Xor - undef
+........Xor - int
 ..........Decimal(10.0) - double
 ..........Decimal(10.0) - double
 ......Assign - boolean
