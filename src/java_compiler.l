@@ -2,6 +2,7 @@
     #include "y.tab.h"
     #include "ast.h"
     #include "semantics.h"
+	#include "codegen.h"
     #include <stdio.h>
     #include <stdlib.h>
     #include <string.h>
@@ -445,7 +446,10 @@ int main(int argc, char **argv) {
 
     yyparse();
 
-    if (!has_error && !has_lexical_error) check_program(root);
+    if (!has_error && !has_lexical_error) {
+		int errs = check_program(root);
+		if (errs == 0) generate_code(root);
+	}
 
     return 0;
 }

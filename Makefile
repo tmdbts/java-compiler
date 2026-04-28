@@ -5,7 +5,7 @@ build:
 	cd bin && \
 		yacc -dv ../src/java_compiler.y && \
 		flex ../src/java_compiler.l && \
-		$(CC) y.tab.c lex.yy.c ../src/ast.c ../src/semantics.c -I../src -Wall -Wno-unused-function -o jucompiler
+		$(CC) y.tab.c lex.yy.c ../src/ast.c ../src/semantics.c ../src/codegen.c -I../src -Wall -Wno-unused-function -o jucompiler
 
 	@echo "\nParser built successfully."
 
@@ -33,7 +33,8 @@ zip:
 	@echo "Creating zip archive...\n"
 
 	zip -r bin/jucompiler.zip src/java_compiler.l src/java_compiler.y \
-		src/ast.c src/ast.h src/semantics.c src/semantics.h
+		src/ast.c src/ast.h src/semantics.c src/semantics.h \
+		src/codegen.c src/codegen.h
 
 	@echo "Zip archive created successfully."
 
